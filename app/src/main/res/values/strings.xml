@@ -1,8 +1,21 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">FitPet</string>
     <string name="title_home">Главная</string>
     <string name="title_dashboard">Лента</string>
     <string name="title_notifications">Забота</string>
     <string name="title_profile">Профиль</string>
     <string name="home_fragment_label">Welcome to FitPet!</string>
+    <string name="connected">Connected</string>
+    <string name="disconnected">Disconnected</string>
+    <string name="hint_title">Title</string>
+    <string name="hint_description">Description</string>
+    <string name="hint_date">Date</string>
+    <string name="hint_time">Time</string>
+    <string name="save">Save</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_password">Password</string>
+    <string name="register">Register</string>
+    <string name="already_have_account_login">Already have an account? Login</string>
+    <string name="login">Login</string>
+    <string name="dont_have_account_register">Нет аккаунта? Регистрация</string>
 </resources>
