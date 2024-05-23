@@ -1,0 +1,50 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <EditText
+        android:id="@+id/pet_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/pet_name" />
+
+    <EditText
+        android:id="@+id/pet_gender"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/pet_gender" />
+
+    <EditText
+        android:id="@+id/pet_age"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/pet_age"
+        android:inputType="number" />
+
+    <EditText
+        android:id="@+id/pet_weight"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/pet_weight"
+        android:inputType="numberDecimal" />
+
+    <EditText
+        android:id="@+id/pet_species"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/pet_species" />
+
+    <EditText
+        android:id="@+id/pet_breed"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/pet_breed" />
+
+    <EditText
+        android:id="@+id/pet_avatar_url"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/pet_avatar_url" />
+</LinearLayout>

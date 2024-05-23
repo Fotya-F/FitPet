@@ -7,7 +7,7 @@ import ru.mirea.guseva.fitpet.data.model.Device
 import ru.mirea.guseva.fitpet.databinding.ItemDeviceBinding
 
 class DeviceAdapter(
-    private val devices: List<Device>,
+    private var devices: List<Device>,
     private val onItemClicked: (Device) -> Unit
 ) : RecyclerView.Adapter<DeviceAdapter.DeviceViewHolder>() {
 
@@ -37,5 +37,10 @@ class DeviceAdapter(
             binding.device = device
             binding.executePendingBindings()
         }
+    }
+
+    fun updateData(newDevices: List<Device>) {
+        devices = newDevices
+        notifyDataSetChanged()
     }
 }

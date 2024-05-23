@@ -9,7 +9,7 @@
         android:id="@+id/mainFragment"
         android:name="ru.mirea.guseva.fitpet.data.ui.main.MainFragment"
         android:label="Главная"
-        tools:layout="@layout/fragment_main" >
+        tools:layout="@layout/fragment_main">
         <action
             android:id="@+id/action_mainFragment_to_calendarFragment"
             app:destination="@id/calendarFragment" />
@@ -28,7 +28,7 @@
         android:id="@+id/calendarFragment"
         android:name="ru.mirea.guseva.fitpet.data.ui.calendar.CalendarFragment"
         android:label="Календарь"
-        tools:layout="@layout/fragment_calendar" >
+        tools:layout="@layout/fragment_calendar">
         <action
             android:id="@+id/action_calendarFragment_to_mainFragment"
             app:destination="@id/mainFragment" />
@@ -41,7 +41,7 @@
         android:id="@+id/careFragment"
         android:name="ru.mirea.guseva.fitpet.data.ui.care.CareFragment"
         android:label="Забота"
-        tools:layout="@layout/fragment_care" >
+        tools:layout="@layout/fragment_care">
         <action
             android:id="@+id/action_careFragment_to_mainFragment"
             app:destination="@id/mainFragment" />
@@ -51,7 +51,7 @@
         android:id="@+id/feedFragment"
         android:name="ru.mirea.guseva.fitpet.data.ui.feed.FeedFragment"
         android:label="Лента"
-        tools:layout="@layout/fragment_feed" >
+        tools:layout="@layout/fragment_feed">
         <action
             android:id="@+id/action_feedFragment_to_mainFragment"
             app:destination="@id/mainFragment" />
@@ -61,7 +61,7 @@
         android:id="@+id/profileFragment"
         android:name="ru.mirea.guseva.fitpet.data.ui.profile.ProfileFragment"
         android:label="Профиль"
-        tools:layout="@layout/fragment_profile" >
+        tools:layout="@layout/fragment_profile">
         <action
             android:id="@+id/action_profileFragment_to_mainFragment"
             app:destination="@id/mainFragment" />
@@ -71,7 +71,7 @@
         android:id="@+id/addEventFragment"
         android:name="ru.mirea.guseva.fitpet.data.ui.calendar.AddEventFragment"
         android:label="Добавить Событие"
-        tools:layout="@layout/fragment_add_event" >
+        tools:layout="@layout/fragment_add_event">
         <action
             android:id="@+id/action_addEventFragment_to_calendarFragment"
             app:destination="@id/calendarFragment" />

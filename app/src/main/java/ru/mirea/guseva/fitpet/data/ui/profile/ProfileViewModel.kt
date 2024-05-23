@@ -3,13 +3,14 @@ package ru.mirea.guseva.fitpet.data.ui.profile
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.launch
 import ru.mirea.guseva.fitpet.data.local.AppDatabase
 import ru.mirea.guseva.fitpet.data.model.Device
 import ru.mirea.guseva.fitpet.data.model.Pet
 import ru.mirea.guseva.fitpet.data.repository.DeviceRepository
 import ru.mirea.guseva.fitpet.data.repository.PetRepository
-import kotlinx.coroutines.launch
 
 class ProfileViewModel(application: Application) : AndroidViewModel(application) {
     private val petDao = AppDatabase.getDatabase(application).petDao()
@@ -43,4 +44,29 @@ class ProfileViewModel(application: Application) : AndroidViewModel(application)
     fun deleteDevice(device: Device) = viewModelScope.launch {
         deviceRepository.delete(device)
     }
+
+    fun onAddPetClick() {
+        // Implement logic to handle adding a pet
+    }
+
+    fun onAddDeviceClick() {
+        // Implement logic to handle adding a device
+    }
+
+    private val _navigateToAddPet = MutableLiveData<Boolean>()
+    val navigateToAddPet: LiveData<Boolean>
+        get() = _navigateToAddPet
+
+    private val _navigateToAddDevice = MutableLiveData<Boolean>()
+    val navigateToAddDevice: LiveData<Boolean>
+        get() = _navigateToAddDevice
+
+    fun onAddPetNavigated() {
+        _navigateToAddPet.value = false
+    }
+
+    fun onAddDeviceNavigated() {
+        _navigateToAddDevice.value = false
+    }
+
 }

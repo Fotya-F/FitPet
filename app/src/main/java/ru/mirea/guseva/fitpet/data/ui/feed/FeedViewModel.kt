@@ -3,26 +3,30 @@ package ru.mirea.guseva.fitpet.data.ui.feed
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.map
+import androidx.lifecycle.switchMap
 import ru.mirea.guseva.fitpet.data.local.AppDatabase
 import ru.mirea.guseva.fitpet.data.model.Article
 import ru.mirea.guseva.fitpet.data.repository.ArticleRepository
-import kotlinx.coroutines.launch
 
 class FeedViewModel(application: Application) : AndroidViewModel(application) {
     private val articleDao = AppDatabase.getDatabase(application).articleDao()
     private val repository: ArticleRepository = ArticleRepository(articleDao)
-    val allArticles: LiveData<List<Article>> = repository.allArticles
+    private val allArticles: LiveData<List<Article>> = repository.allArticles
 
-    fun insert(article: Article) = viewModelScope.launch {
-        repository.insert(article)
+    private val _searchQuery = MutableLiveData<String>("")
+    val filteredArticles: LiveData<List<Article>> = _searchQuery.switchMap { query ->
+        if (query.isEmpty()) {
+            allArticles
+        } else {
+            allArticles.map { articles ->
+                articles.filter { it.title.contains(query, true) || it.content.contains(query, true) }
+            }
+        }
     }
 
-    fun update(article: Article) = viewModelScope.launch {
-        repository.update(article)
-    }
-
-    fun delete(article: Article) = viewModelScope.launch {
-        repository.delete(article)
+    fun filterArticles(query: String) {
+        _searchQuery.value = query
     }
 }

@@ -1,0 +1,59 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="pet"
+            type="ru.mirea.guseva.fitpet.data.model.Pet" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <ImageView
+            android:id="@+id/pet_avatar"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/ic_pet_placeholder"
+            app:imageUrl="@{pet.avatarUrl}" />
+
+        <TextView
+            android:id="@+id/pet_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{pet.name}"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="8dp" />
+
+        <TextView
+            android:id="@+id/pet_details"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text='@{"Species: " + pet.species + ", Breed: " + pet.breed}'
+            android:textSize="14sp"
+            android:gravity="center_horizontal" />
+
+        <TextView
+            android:id="@+id/pet_age"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text='@{"Age: " + pet.age + " years"}'
+            android:textSize="14sp"
+            android:gravity="center_horizontal" />
+
+        <TextView
+            android:id="@+id/pet_weight"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text='@{"Weight: " + pet.weight + " kg"}'
+            android:textSize="14sp"
+            android:gravity="center_horizontal" />
+
+    </LinearLayout>
+</layout>

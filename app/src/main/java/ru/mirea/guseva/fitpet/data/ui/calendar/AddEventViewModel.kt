@@ -2,17 +2,15 @@ package ru.mirea.guseva.fitpet.data.ui.calendar
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import ru.mirea.guseva.fitpet.data.local.AppDatabase
 import ru.mirea.guseva.fitpet.data.model.Event
 import ru.mirea.guseva.fitpet.data.repository.EventRepository
 
-class CalendarViewModel(application: Application) : AndroidViewModel(application) {
+class AddEventViewModel(application: Application) : AndroidViewModel(application) {
     private val eventDao = AppDatabase.getDatabase(application).eventDao()
     private val repository: EventRepository = EventRepository(eventDao)
-    val allEvents: LiveData<List<Event>> = repository.allEvents
 
     fun insert(event: Event) = viewModelScope.launch {
         repository.insert(event)

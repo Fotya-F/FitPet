@@ -13,5 +13,10 @@
     <color name="teal_200">#03DAC5</color>
     <color name="teal_700">#00796B</color>
     <color name="white">#FFFFFF</color>
-    <color name="black">#000000</color>
+    <color name="black">#39393A</color>
+
+    <color name="yellow">#E9D758</color>
+    <color name="green">#297373</color>
+    <color name="orange">#FF8552</color>
+    <color name="gray">#E6E6E6</color>
 </resources>

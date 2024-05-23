@@ -7,7 +7,7 @@ import ru.mirea.guseva.fitpet.data.model.Event
 import ru.mirea.guseva.fitpet.databinding.ItemEventBinding
 
 class EventAdapter(
-    private val events: List<Event>,
+    private var events: List<Event>,
     private val onItemClicked: (Event) -> Unit
 ) : RecyclerView.Adapter<EventAdapter.EventViewHolder>() {
 
@@ -22,6 +22,11 @@ class EventAdapter(
     }
 
     override fun getItemCount() = events.size
+
+    fun updateData(newEvents: List<Event>) {
+        events = newEvents
+        notifyDataSetChanged()
+    }
 
     inner class EventViewHolder(private val binding: ItemEventBinding) : RecyclerView.ViewHolder(binding.root) {
         init {

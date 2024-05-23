@@ -7,7 +7,7 @@ import ru.mirea.guseva.fitpet.data.model.Article
 import ru.mirea.guseva.fitpet.databinding.ItemArticleBinding
 
 class ArticleAdapter(
-    private val articles: List<Article>,
+    private var articles: List<Article>,
     private val onItemClicked: (Article) -> Unit
 ) : RecyclerView.Adapter<ArticleAdapter.ArticleViewHolder>() {
 
@@ -37,5 +37,10 @@ class ArticleAdapter(
             binding.article = article
             binding.executePendingBindings()
         }
+    }
+
+    fun updateData(newArticles: List<Article>) {
+        articles = newArticles
+        notifyDataSetChanged()
     }
 }

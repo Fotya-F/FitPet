@@ -1,7 +1,6 @@
 package ru.mirea.guseva.fitpet.data.ui.care
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,7 +15,6 @@ class CareFragment : Fragment() {
     private lateinit var careViewModel: CareViewModel
     private var _binding: FragmentCareBinding? = null
     private val binding get() = _binding!!
-    private val TAG = "CareFragment"
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,17 +28,28 @@ class CareFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         careViewModel = ViewModelProvider(this).get(CareViewModel::class.java)
 
-        val recyclerView = binding.recyclerViewPets
-        recyclerView.layoutManager = LinearLayoutManager(context)
+        setupRecyclerView()
+        setupRecommendationsButton()
+        observeData()
+    }
 
-        // Observe the LiveData
-        careViewModel.allPets.observe(viewLifecycleOwner, { pets ->
-            Log.d(TAG, "Pets observed: ${pets.size}")
-            recyclerView.adapter = PetAdapter(pets) { pet ->
-                // Handle item click here
-            }
-            Log.d(TAG, "Adapter set with ${pets.size} items")
-        })
+    private fun setupRecyclerView() {
+        binding.recyclerViewPets.layoutManager = LinearLayoutManager(context)
+        binding.recyclerViewPets.adapter = PetAdapter(emptyList()) { pet ->
+            // Handle item click here
+        }
+    }
+
+    private fun setupRecommendationsButton() {
+        binding.buttonRecommendations.setOnClickListener {
+            // Показать рекомендации
+        }
+    }
+
+    private fun observeData() {
+        careViewModel.allPets.observe(viewLifecycleOwner) { pets ->
+            (binding.recyclerViewPets.adapter as PetAdapter).updateData(pets)
+        }
     }
 
     override fun onDestroyView() {

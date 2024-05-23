@@ -22,10 +22,12 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/article_content"
+            android:id="@+id/article_excerpt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@{article.content}"
+            android:maxLines="3"
+            android:ellipsize="end"
             android:textSize="14sp" />
 
     </LinearLayout>

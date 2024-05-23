@@ -20,3 +20,4 @@ class EventRepository(private val eventDao: EventDao) {
         eventDao.delete(event)
     }
 }
+

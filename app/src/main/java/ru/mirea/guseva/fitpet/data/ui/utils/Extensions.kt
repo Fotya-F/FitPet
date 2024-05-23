@@ -6,7 +6,8 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import ru.mirea.guseva.fitpet.R
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Date
+import java.util.Locale
 
 @BindingAdapter("imageUrl")
 fun ImageView.setImageUrl(url: String?) {

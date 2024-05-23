@@ -4,15 +4,15 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import ru.mirea.guseva.fitpet.data.model.Pet
-import ru.mirea.guseva.fitpet.databinding.ItemPetBinding
+import ru.mirea.guseva.fitpet.databinding.ItemPetCardBinding
 
 class PetAdapter(
-    private val pets: List<Pet>,
+    private var pets: List<Pet>,
     private val onItemClicked: (Pet) -> Unit
 ) : RecyclerView.Adapter<PetAdapter.PetViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PetViewHolder {
-        val binding = ItemPetBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ItemPetCardBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return PetViewHolder(binding)
     }
 
@@ -23,7 +23,7 @@ class PetAdapter(
 
     override fun getItemCount() = pets.size
 
-    inner class PetViewHolder(private val binding: ItemPetBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class PetViewHolder(private val binding: ItemPetCardBinding) : RecyclerView.ViewHolder(binding.root) {
         init {
             binding.root.setOnClickListener {
                 val position = adapterPosition
@@ -37,5 +37,10 @@ class PetAdapter(
             binding.pet = pet
             binding.executePendingBindings()
         }
+    }
+
+    fun updateData(newPets: List<Pet>) {
+        pets = newPets
+        notifyDataSetChanged()
     }
 }

@@ -20,18 +20,10 @@
             app:navGraph="@navigation/nav_graph" />
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/bottom_nav_view"
+            android:id="@+id/bottomNavView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             app:menu="@menu/bottom_nav_menu" />
-
-        <TextView
-            android:id="@+id/main_activity_unique_element"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="MainActivity Element"
-            android:layout_gravity="center"
-            android:visibility="visible" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

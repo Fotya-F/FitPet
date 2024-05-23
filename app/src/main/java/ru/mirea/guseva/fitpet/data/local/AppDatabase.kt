@@ -4,12 +4,15 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
+import ru.mirea.guseva.fitpet.data.Converters
 import ru.mirea.guseva.fitpet.data.model.Article
 import ru.mirea.guseva.fitpet.data.model.Device
 import ru.mirea.guseva.fitpet.data.model.Event
 import ru.mirea.guseva.fitpet.data.model.Pet
 
-@Database(entities = [Pet::class, Event::class, Article::class, Device::class], version = 1, exportSchema = false)
+@Database(entities = [Pet::class, Event::class, Article::class, Device::class], version = 2, exportSchema = false)
+@TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun petDao(): PetDao
     abstract fun eventDao(): EventDao
@@ -26,10 +29,12 @@ abstract class AppDatabase : RoomDatabase() {
                     context.applicationContext,
                     AppDatabase::class.java,
                     "fitpet_database"
-                ).build()
+                ).fallbackToDestructiveMigration() // Добавьте это, если не хотите писать миграции вручную
+                    .build()
                 INSTANCE = instance
                 instance
             }
         }
     }
 }
+
