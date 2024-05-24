@@ -8,10 +8,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="ru.mirea.guseva.fitpet" />
-                  <option name="mobileSdkAppId" value="1:20001571437:android:7ef12253738a449eadf564" />
-                  <option name="projectId" value="fitpet-6d70e" />
-                  <option name="projectNumber" value="20001571437" />
+                  <option name="appId" value="PLACEHOLDER" />
+                  <option name="mobileSdkAppId" value="" />
+                  <option name="projectId" value="" />
+                  <option name="projectNumber" value="" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />
