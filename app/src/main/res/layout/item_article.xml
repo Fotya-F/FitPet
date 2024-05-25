@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
@@ -13,13 +14,21 @@
         android:orientation="vertical"
         android:padding="16dp">
 
+        <ImageView
+            android:id="@+id/article_image"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:scaleType="centerCrop"
+            app:imageUrl="@{article.imageUrl}" />
+
         <TextView
             android:id="@+id/article_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@{article.title}"
             android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:layout_marginTop="8dp" />
 
         <TextView
             android:id="@+id/article_excerpt"
@@ -28,7 +37,8 @@
             android:text="@{article.content}"
             android:maxLines="3"
             android:ellipsize="end"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:layout_marginTop="4dp" />
 
     </LinearLayout>
 </layout>

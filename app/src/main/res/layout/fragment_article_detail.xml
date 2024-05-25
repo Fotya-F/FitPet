@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".data.ui.feed.ArticleDetailFragment">
+
+    <data>
+        <variable
+            name="article"
+            type="ru.mirea.guseva.fitpet.data.model.Article" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp">
+
+        <ImageButton
+            android:id="@+id/back_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_back"
+            android:contentDescription="Back"
+            android:background="?attr/selectableItemBackgroundBorderless" />
+
+        <ImageButton
+            android:id="@+id/favorite_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_favorite"
+            android:contentDescription="Favorite"
+            android:layout_alignParentEnd="true"
+            android:background="?attr/selectableItemBackgroundBorderless" />
+
+        <ImageView
+            android:id="@+id/article_image"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_below="@id/back_button"
+            android:scaleType="centerCrop"
+            app:imageUrl="@{article.imageUrl}" />
+
+        <TextView
+            android:id="@+id/article_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{article.title}"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_below="@id/article_image"
+            android:layout_marginTop="16dp" />
+
+        <TextView
+            android:id="@+id/article_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{article.content}"
+            android:layout_below="@id/article_title"
+            android:layout_marginTop="8dp" />
+
+    </RelativeLayout>
+</layout>

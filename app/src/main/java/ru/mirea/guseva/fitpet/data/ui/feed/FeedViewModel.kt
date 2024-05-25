@@ -18,7 +18,7 @@ class FeedViewModel(application: Application) : AndroidViewModel(application) {
     private val _searchQuery = MutableLiveData<String>("")
     val filteredArticles: LiveData<List<Article>> = _searchQuery.switchMap { query ->
         if (query.isEmpty()) {
-            allArticles
+            filterArticlesByUserPets()
         } else {
             allArticles.map { articles ->
                 articles.filter { it.title.contains(query, true) || it.content.contains(query, true) }
@@ -28,5 +28,18 @@ class FeedViewModel(application: Application) : AndroidViewModel(application) {
 
     fun filterArticles(query: String) {
         _searchQuery.value = query
+    }
+
+    private fun filterArticlesByUserPets(): LiveData<List<Article>> {
+        // Here you can implement logic to filter articles based on user's pets
+        // For example, fetch user's pets and filter articles based on pet types
+        return allArticles.map { articles ->
+            articles.filter { article ->
+                // Filter logic based on pet types
+                // Example: userPets is a list of user's pet types
+                val userPets = listOf("Dog", "Rat")
+                userPets.any { petType -> article.content.contains(petType, true) }
+            }
+        }
     }
 }

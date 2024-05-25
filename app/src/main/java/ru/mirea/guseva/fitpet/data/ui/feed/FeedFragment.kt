@@ -31,13 +31,14 @@ class FeedFragment : Fragment() {
 
         setupRecyclerView()
         setupSearchView()
+        setupFilterButton()
         observeData()
     }
 
     private fun setupRecyclerView() {
         binding.recyclerViewArticles.layoutManager = LinearLayoutManager(context)
         binding.recyclerViewArticles.adapter = ArticleAdapter(emptyList()) { article ->
-            // Handle item click here
+            // Handle item click here, open article detail
         }
     }
 
@@ -53,6 +54,12 @@ class FeedFragment : Fragment() {
                 return false
             }
         })
+    }
+
+    private fun setupFilterButton() {
+        binding.filterButton.setOnClickListener {
+            // Handle filter logic here
+        }
     }
 
     private fun observeData() {

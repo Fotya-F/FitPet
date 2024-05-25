@@ -38,4 +38,5 @@
     <string name="add">Добавить</string>
     <string name="cancel">Отмена</string>
     <string name="add_device">Добавить устройство</string>
+    <string name="feed_title">Название статьи</string>
 </resources>

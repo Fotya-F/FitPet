@@ -3,7 +3,9 @@ package ru.mirea.guseva.fitpet.data.ui.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import androidx.navigation.findNavController
 import ru.mirea.guseva.fitpet.data.model.Article
+import ru.mirea.guseva.fitpet.data.ui.feed.FeedFragmentDirections
 import ru.mirea.guseva.fitpet.databinding.ItemArticleBinding
 
 class ArticleAdapter(
@@ -28,7 +30,8 @@ class ArticleAdapter(
             binding.root.setOnClickListener {
                 val position = adapterPosition
                 if (position != RecyclerView.NO_POSITION) {
-                    onItemClicked(articles[position])
+                    val action = FeedFragmentDirections.actionFeedFragmentToArticleDetailFragment(articles[position])
+                    binding.root.findNavController().navigate(action)
                 }
             }
         }
