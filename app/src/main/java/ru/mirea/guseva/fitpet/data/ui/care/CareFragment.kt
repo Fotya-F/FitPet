@@ -26,7 +26,7 @@ class CareFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        careViewModel = ViewModelProvider(this).get(CareViewModel::class.java)
+        careViewModel = ViewModelProvider(this)[CareViewModel::class.java]
 
         setupRecyclerView()
         setupRecommendationsButton()
@@ -35,7 +35,7 @@ class CareFragment : Fragment() {
 
     private fun setupRecyclerView() {
         binding.recyclerViewPets.layoutManager = LinearLayoutManager(context)
-        binding.recyclerViewPets.adapter = PetAdapter(emptyList()) { pet ->
+        binding.recyclerViewPets.adapter = PetAdapter(emptyList()) { _ ->
             // Handle item click here
         }
     }

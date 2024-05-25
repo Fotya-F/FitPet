@@ -46,11 +46,11 @@ class ProfileViewModel(application: Application) : AndroidViewModel(application)
     }
 
     fun onAddPetClick() {
-        // Implement logic to handle adding a pet
+        _navigateToAddPet.value = true
     }
 
     fun onAddDeviceClick() {
-        // Implement logic to handle adding a device
+        _navigateToAddDevice.value = true
     }
 
     private val _navigateToAddPet = MutableLiveData<Boolean>()
@@ -68,5 +68,4 @@ class ProfileViewModel(application: Application) : AndroidViewModel(application)
     fun onAddDeviceNavigated() {
         _navigateToAddDevice.value = false
     }
-
 }

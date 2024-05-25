@@ -5,16 +5,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import ru.mirea.guseva.fitpet.data.ui.adapters.PetAdapter
-import ru.mirea.guseva.fitpet.data.ui.adapters.PlanAdapter
 import ru.mirea.guseva.fitpet.data.ui.adapters.StatusAdapter
 import ru.mirea.guseva.fitpet.databinding.FragmentMainBinding
 
 class MainFragment : Fragment() {
 
-    private lateinit var mainViewModel: MainViewModel
+    private val mainViewModel: MainViewModel by viewModels()
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
 
@@ -28,28 +27,41 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
-        setupRecyclerViews()
-        observeData()
-    }
+        binding.viewModel = mainViewModel
+        binding.lifecycleOwner = viewLifecycleOwner
 
-    private fun setupRecyclerViews() {
-        binding.recyclerViewPets.layoutManager = LinearLayoutManager(context)
-        binding.recyclerViewPets.adapter = PetAdapter(emptyList()) { pet ->
-            // Handle item click here
+        setupPetRecyclerView()
+        setupStatusRecyclerView()
+
+        mainViewModel.selectedPet.observe(viewLifecycleOwner) { pet ->
+            pet?.let {
+                binding.nextPlanDate.text = it.plans.firstOrNull() ?: "Нет планов"
+                // Обновление статуса для выбранного питомца
+                mainViewModel.updateStatus(it)
+            }
         }
-
-        binding.recyclerViewPlans.layoutManager = LinearLayoutManager(context)
-        binding.recyclerViewPlans.adapter = PlanAdapter(emptyList())
-
-        binding.recyclerViewStatus.layoutManager = LinearLayoutManager(context)
-        binding.recyclerViewStatus.adapter = StatusAdapter(emptyList())
     }
 
-    private fun observeData() {
+    private fun setupPetRecyclerView() {
+        binding.recyclerViewPets.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        val petAdapter = PetAdapter(emptyList()) { pet ->
+            mainViewModel.selectPet(pet)
+        }
+        binding.recyclerViewPets.adapter = petAdapter
+
         mainViewModel.pets.observe(viewLifecycleOwner) { pets ->
-            (binding.recyclerViewPets.adapter as PetAdapter).updateData(pets)
+            petAdapter.updateData(pets)
+        }
+    }
+
+    private fun setupStatusRecyclerView() {
+        binding.recyclerViewStatus.layoutManager = LinearLayoutManager(context)
+        val statusAdapter = StatusAdapter(emptyList())
+        binding.recyclerViewStatus.adapter = statusAdapter
+
+        mainViewModel.status.observe(viewLifecycleOwner) { statuses ->
+            statusAdapter.updateData(statuses)
         }
     }
 

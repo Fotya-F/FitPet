@@ -3,13 +3,34 @@
     <data>
         <variable
             name="status"
-            type="String" />
+            type="ru.mirea.guseva.fitpet.data.model.Status" />
     </data>
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:text="@{status}"
-        android:textSize="14sp" />
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/sleep_status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text='@{"Сон: " + status.sleep + " - " + status.sleepStatus}'
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/weight_status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text='@{"Вес: " + status.weight + " - " + status.weightStatus}'
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/activity_status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text='@{"Активность: " + status.activity + " - " + status.activityStatus}'
+            android:textSize="14sp" />
+    </LinearLayout>
 </layout>

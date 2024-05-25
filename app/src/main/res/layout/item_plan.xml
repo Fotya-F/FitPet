@@ -3,13 +3,13 @@
     <data>
         <variable
             name="plan"
-            type="String" />
+            type="ru.mirea.guseva.fitpet.data.model.Plan" />
     </data>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="16dp"
-        android:text="@{plan}"
+        android:text="@{plan.title}"
         android:textSize="14sp" />
 </layout>

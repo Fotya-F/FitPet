@@ -29,7 +29,7 @@ abstract class AppDatabase : RoomDatabase() {
                     context.applicationContext,
                     AppDatabase::class.java,
                     "fitpet_database"
-                ).fallbackToDestructiveMigration() // Добавьте это, если не хотите писать миграции вручную
+                ).fallbackToDestructiveMigration()
                     .build()
                 INSTANCE = instance
                 instance
@@ -37,4 +37,3 @@ abstract class AppDatabase : RoomDatabase() {
         }
     }
 }
-

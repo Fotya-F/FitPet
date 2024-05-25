@@ -47,7 +47,7 @@
                     android:layout_marginTop="24dp"
                     android:layout_marginBottom="8dp" />
 
-                <!-- Добавьте здесь компонент для графика активности, например, BarChart -->
+                <!-- Add a component for activity chart, e.g., BarChart -->
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -74,7 +74,7 @@
                     android:layout_marginTop="24dp"
                     android:layout_marginBottom="8dp" />
 
-                <!-- Добавьте здесь компонент для карты, например, MapView -->
+                <!-- Add a component for map, e.g., MapView -->
 
             </LinearLayout>
         </ScrollView>

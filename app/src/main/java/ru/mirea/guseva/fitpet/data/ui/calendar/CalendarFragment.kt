@@ -35,7 +35,7 @@ class CalendarFragment : Fragment() {
 
     private fun setupRecyclerView() {
         binding.recyclerViewEvents.layoutManager = LinearLayoutManager(context)
-        binding.recyclerViewEvents.adapter = EventAdapter(emptyList()) { event ->
+        binding.recyclerViewEvents.adapter = EventAdapter(emptyList()) { _ ->
             // Handle item click here
         }
     }

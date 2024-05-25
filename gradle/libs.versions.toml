@@ -20,6 +20,7 @@ databindingCommon = "8.4.0"
 googleGmsGoogleServices = "4.4.1"
 firebaseAuth = "23.0.0"
 composePreviewRenderer = "0.0.1-alpha01"
+firebaseCrashlyticsBuildtools = "3.0.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -39,6 +40,7 @@ androidx-room-compiler = { group = "androidx.room", name = "room-compiler", vers
 androidx-databinding-common = { group = "androidx.databinding", name = "databinding-common", version.ref = "databindingCommon" }
 firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version.ref = "firebaseAuth" }
 compose-preview-renderer = { group = "com.android.tools.compose", name = "compose-preview-renderer", version.ref = "composePreviewRenderer" }
+firebase-crashlytics-buildtools = { group = "com.google.firebase", name = "firebase-crashlytics-buildtools", version.ref = "firebaseCrashlyticsBuildtools" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

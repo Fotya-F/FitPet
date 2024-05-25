@@ -23,11 +23,6 @@ class EventAdapter(
 
     override fun getItemCount() = events.size
 
-    fun updateData(newEvents: List<Event>) {
-        events = newEvents
-        notifyDataSetChanged()
-    }
-
     inner class EventViewHolder(private val binding: ItemEventBinding) : RecyclerView.ViewHolder(binding.root) {
         init {
             binding.root.setOnClickListener {
@@ -42,5 +37,10 @@ class EventAdapter(
             binding.event = event
             binding.executePendingBindings()
         }
+    }
+
+    fun updateData(newEvents: List<Event>) {
+        events = newEvents
+        notifyDataSetChanged()
     }
 }

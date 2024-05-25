@@ -1,4 +1,5 @@
 package ru.mirea.guseva.fitpet.data.model
+
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 

@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <!-- ViewModel or другие переменные для привязки данных -->
+        <!-- ViewModel or other data binding variables can be declared here -->
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
