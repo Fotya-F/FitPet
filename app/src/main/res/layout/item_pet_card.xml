@@ -4,28 +4,35 @@
     <data>
         <variable
             name="pet"
-            type="ru.mirea.guseva.fitpet.data.model.Pet" />
+            type="ru.mirea.guseva.fitpet.data.local.entities.Pet" />
     </data>
 
-    <LinearLayout
+    <androidx.cardview.widget.CardView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="8dp">
+        android:layout_margin="8dp"
+        app:cardCornerRadius="8dp">
 
-        <ImageView
-            android:id="@+id/pet_avatar"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:src="@drawable/ic_pet_placeholder"
-            app:imageUrl="@{pet.avatarUrl}" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="16dp">
 
-        <TextView
-            android:id="@+id/pet_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{pet.name}"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-    </LinearLayout>
+            <ImageView
+                android:id="@+id/petImage"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/ic_pet_avatar" />
+
+            <TextView
+                android:id="@+id/petName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{pet.name}"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_marginTop="8dp" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
 </layout>

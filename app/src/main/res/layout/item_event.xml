@@ -1,46 +1,20 @@
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="16dp">
 
-    <data>
-        <variable
-            name="event"
-            type="ru.mirea.guseva.fitpet.data.model.Event" />
-    </data>
+    <ImageView
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:src="@drawable/ic_launcher_foreground"
+        android:contentDescription="@string/event_image" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/eventName"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
-
-        <TextView
-            android:id="@+id/event_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@{event.title}"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/event_description"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@{event.description}"
-            android:textSize="14sp" />
-
-        <TextView
-            android:id="@+id/event_date"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@{event.date}"
-            android:textSize="14sp" />
-
-        <TextView
-            android:id="@+id/event_time"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@{event.time}"
-            android:textSize="14sp" />
-
-    </LinearLayout>
-</layout>
+        android:layout_marginStart="16dp"
+        android:textSize="18sp" />
+</LinearLayout>

@@ -1,44 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
 
-    <data>
-        <variable
-            name="article"
-            type="ru.mirea.guseva.fitpet.data.model.Article" />
-    </data>
-
-    <LinearLayout
+    <ImageView
+        android:id="@+id/articleImage"
         android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_launcher_foreground" />
+
+    <TextView
+        android:id="@+id/articleTitle"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:layout_marginTop="8dp"
+        android:textSize="18sp" />
 
-        <ImageView
-            android:id="@+id/article_image"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:scaleType="centerCrop"
-            app:imageUrl="@{article.imageUrl}" />
-
-        <TextView
-            android:id="@+id/article_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@{article.title}"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:layout_marginTop="8dp" />
-
-        <TextView
-            android:id="@+id/article_excerpt"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@{article.content}"
-            android:maxLines="3"
-            android:ellipsize="end"
-            android:textSize="14sp"
-            android:layout_marginTop="4dp" />
-
-    </LinearLayout>
-</layout>
+    <TextView
+        android:id="@+id/articleDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:textSize="14sp" />
+</LinearLayout>

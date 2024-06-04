@@ -4,17 +4,17 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        val navVersion = "2.7.7"
-        val kotlinVersion = "2.0.0"
-        classpath("androidx.navigation:navigation-safe-args-gradle-plugin:$navVersion")
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
+        classpath("com.android.tools.build:gradle:7.4.2")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.8.21")
+        classpath("com.google.dagger:hilt-android-gradle-plugin:2.45")
+        classpath("androidx.navigation:navigation-safe-args-gradle-plugin:2.5.3")
+        classpath ("com.google.gms:google-services:4.3.10")
     }
 }
 
-plugins {
-    alias(libs.plugins.androidApplication) apply false
-    alias(libs.plugins.jetbrainsKotlinAndroid) apply false
-    alias(libs.plugins.googleGmsGoogleServices) apply false
-    id("androidx.navigation.safeargs.kotlin") version "2.7.7" apply false
-    id("com.google.dagger.hilt.android") version "2.44" apply false
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
 }

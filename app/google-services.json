@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "20001571437",
-    "project_id": "fitpet-6d70e",
-    "storage_bucket": "fitpet-6d70e.appspot.com"
+    "project_number": "746943290355",
+    "project_id": "fitpet-new",
+    "storage_bucket": "fitpet-new.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:20001571437:android:7ef12253738a449eadf564",
+        "mobilesdk_app_id": "1:746943290355:android:96555b07150124a003d086",
         "android_client_info": {
           "package_name": "ru.mirea.guseva.fitpet"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyDN4b1uvMwMgyVOHATJqLw3uR7DkCmcReY"
+          "current_key": "AIzaSyCchi-JHPRSFJ6VP2ZmyXkUJcssIjAI5c0"
         }
       ],
       "services": {

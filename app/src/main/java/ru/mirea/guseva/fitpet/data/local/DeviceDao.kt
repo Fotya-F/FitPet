@@ -1,20 +1,27 @@
 package ru.mirea.guseva.fitpet.data.local
 
-import androidx.lifecycle.LiveData
-import androidx.room.*
-import ru.mirea.guseva.fitpet.data.model.Device
+import androidx.room.Dao
+import androidx.room.Delete
+import androidx.room.Insert
+import androidx.room.Query
+import androidx.room.Update
+import kotlinx.coroutines.flow.Flow
+import ru.mirea.guseva.fitpet.data.local.entities.SmartDevice
 
 @Dao
 interface DeviceDao {
-    @Query("SELECT * FROM devices")
-    fun getAllDevices(): LiveData<List<Device>>
+    @Query("SELECT * FROM smart_devices")
+    fun getAllDevices(): Flow<List<SmartDevice>>
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(device: Device)
+    @Query("SELECT * FROM smart_devices WHERE id = :deviceId")
+    fun getDeviceById(deviceId: Int): Flow<SmartDevice?>
+
+    @Insert
+    suspend fun insertDevice(device: SmartDevice)
 
     @Update
-    suspend fun update(device: Device)
+    suspend fun updateDevice(device: SmartDevice)
 
     @Delete
-    suspend fun delete(device: Device)
+    suspend fun deleteDevice(device: SmartDevice)
 }

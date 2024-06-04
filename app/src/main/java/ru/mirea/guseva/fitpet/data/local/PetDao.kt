@@ -1,20 +1,30 @@
 package ru.mirea.guseva.fitpet.data.local
 
-import androidx.lifecycle.LiveData
-import androidx.room.*
-import ru.mirea.guseva.fitpet.data.model.Pet
+import androidx.room.Dao
+import androidx.room.Delete
+import androidx.room.Insert
+import androidx.room.Query
+import androidx.room.Update
+import kotlinx.coroutines.flow.Flow
+import ru.mirea.guseva.fitpet.data.local.entities.Pet
 
 @Dao
 interface PetDao {
     @Query("SELECT * FROM pets")
-    fun getAllPets(): LiveData<List<Pet>>
+    fun getAllPets(): Flow<List<Pet>>
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(pet: Pet)
+    @Query("SELECT * FROM pets WHERE id = :petId")
+    fun getPetById(petId: Int): Flow<Pet?>
+
+    @Query("SELECT * FROM pets WHERE name = :petName LIMIT 1")
+    suspend fun getPetByName(petName: String): Pet?
+
+    @Insert
+    suspend fun insertPet(pet: Pet)
 
     @Update
-    suspend fun update(pet: Pet)
+    suspend fun updatePet(pet: Pet)
 
     @Delete
-    suspend fun delete(pet: Pet)
+    suspend fun deletePet(pet: Pet)
 }

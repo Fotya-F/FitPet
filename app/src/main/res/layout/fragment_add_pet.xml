@@ -1,0 +1,64 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <!-- Объявите ваши переменные для привязки данных здесь -->
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.main.AddPetFragment">
+
+        <EditText
+            android:id="@+id/petNameEditText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="Имя питомца"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_margin="16dp"/>
+
+        <Spinner
+            android:id="@+id/petTypeSpinner"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/petNameEditText"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_margin="16dp"/>
+
+        <EditText
+            android:id="@+id/petAgeEditText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="Возраст питомца"
+            app:layout_constraintTop_toBottomOf="@id/petTypeSpinner"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_margin="16dp"/>
+
+        <EditText
+            android:id="@+id/petWeightEditText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="Вес питомца"
+            app:layout_constraintTop_toBottomOf="@id/petAgeEditText"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_margin="16dp"/>
+
+        <Button
+            android:id="@+id/saveButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Сохранить"
+            app:layout_constraintTop_toBottomOf="@id/petWeightEditText"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="16dp"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

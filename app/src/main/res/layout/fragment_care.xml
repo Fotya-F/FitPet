@@ -1,83 +1,12 @@
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".data.ui.care.CareFragment">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
 
-    <data>
-        <variable
-            name="viewModel"
-            type="ru.mirea.guseva.fitpet.data.ui.care.CareViewModel" />
-    </data>
-
-    <RelativeLayout
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvCare"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="16dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Ваши питомцы"
-                    android:textSize="24sp"
-                    android:textStyle="bold"
-                    android:layout_marginBottom="16dp" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recycler_view_pets"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:listitem="@layout/item_pet_card" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="График дня"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:layout_marginTop="24dp"
-                    android:layout_marginBottom="8dp" />
-
-                <!-- Add a component for activity chart, e.g., BarChart -->
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Рекомендации"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:layout_marginTop="24dp"
-                    android:layout_marginBottom="8dp" />
-
-                <Button
-                    android:id="@+id/button_recommendations"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Посмотреть рекомендации"
-                    android:layout_gravity="center_horizontal" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Местоположение питомцев"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:layout_marginTop="24dp"
-                    android:layout_marginBottom="8dp" />
-
-                <!-- Add a component for map, e.g., MapView -->
-
-            </LinearLayout>
-        </ScrollView>
-
-    </RelativeLayout>
-</layout>
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"/>
+</LinearLayout>

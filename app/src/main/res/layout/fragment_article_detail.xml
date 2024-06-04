@@ -1,62 +1,40 @@
-<?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".data.ui.feed.ArticleDetailFragment">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
 
-    <data>
-        <variable
-            name="article"
-            type="ru.mirea.guseva.fitpet.data.model.Article" />
-    </data>
+    <Button
+        android:id="@+id/backButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Back" />
 
-    <RelativeLayout
+    <ToggleButton
+        android:id="@+id/favoriteButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textOn="Remove from Favorites"
+        android:textOff="Add to Favorites" />
+
+    <ImageView
+        android:id="@+id/articleImage"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="16dp">
+        android:layout_height="200dp"
+        android:contentDescription="TODO"
+        android:scaleType="centerCrop" />
 
-        <ImageButton
-            android:id="@+id/back_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_back"
-            android:contentDescription="Back"
-            android:background="?attr/selectableItemBackgroundBorderless" />
+    <TextView
+        android:id="@+id/articleTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_marginTop="16dp" />
 
-        <ImageButton
-            android:id="@+id/favorite_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_favorite"
-            android:contentDescription="Favorite"
-            android:layout_alignParentEnd="true"
-            android:background="?attr/selectableItemBackgroundBorderless" />
-
-        <ImageView
-            android:id="@+id/article_image"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_below="@id/back_button"
-            android:scaleType="centerCrop"
-            app:imageUrl="@{article.imageUrl}" />
-
-        <TextView
-            android:id="@+id/article_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@{article.title}"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:layout_below="@id/article_image"
-            android:layout_marginTop="16dp" />
-
-        <TextView
-            android:id="@+id/article_content"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@{article.content}"
-            android:layout_below="@id/article_title"
-            android:layout_marginTop="8dp" />
-
-    </RelativeLayout>
-</layout>
+    <TextView
+        android:id="@+id/articleContent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp" />
+</LinearLayout>

@@ -1,23 +1,28 @@
-<?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/mainFragment"
+        android:id="@+id/homeFragment"
         android:icon="@drawable/ic_home"
-        android:title="Главная" />
+        android:title="Главная"
+        app:showAsAction="ifRoom" />
     <item
         android:id="@+id/calendarFragment"
         android:icon="@drawable/ic_calendar"
-        android:title="Календарь" />
+        android:title="Календарь"
+        app:showAsAction="ifRoom" />
     <item
         android:id="@+id/careFragment"
         android:icon="@drawable/ic_care"
-        android:title="Забота" />
+        android:title="Забота"
+        app:showAsAction="ifRoom" />
     <item
         android:id="@+id/feedFragment"
         android:icon="@drawable/ic_feed"
-        android:title="Feed" />
+        android:title="Лента"
+        app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/profileFragment"
-        android:icon="@drawable/ic_profile"
-        android:title="Профиль" />
+        android:id="@+id/profilesFragment"
+        android:icon="@drawable/ic_profiles"
+        android:title="Профили"
+        app:showAsAction="ifRoom" />
 </menu>
