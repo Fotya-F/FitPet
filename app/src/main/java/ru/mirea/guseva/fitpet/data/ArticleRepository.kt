@@ -1,5 +1,6 @@
 package ru.mirea.guseva.fitpet.data
 
+import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
@@ -45,7 +46,24 @@ class ArticleRepository @Inject constructor(
 
     suspend fun syncWithFirestore() {
         val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
-        val firestoreArticles = collection.whereEqualTo("userId", userId).get().await().toObjects(Article::class.java)
-        firestoreArticles.forEach { articleDao.insertArticle(it) }
+        try {
+            val firestoreArticles = collection.get().await().toObjects(Article::class.java)
+            firestoreArticles.forEach { articleDao.insertArticle(it) }
+            Log.d("ArticleRepository", "Synced articles: ${firestoreArticles.size}")
+        } catch (e: Exception) {
+            Log.e("ArticleRepository", "Error syncing articles: ${e.message}")
+        }
+    }
+
+    suspend fun clearFirestore() {
+        try {
+            val documents = collection.get().await()
+            for (document in documents) {
+                collection.document(document.id).delete().await()
+            }
+            Log.d("ArticleRepository", "Cleared Firestore articles")
+        } catch (e: Exception) {
+            Log.e("ArticleRepository", "Error clearing Firestore: ${e.message}")
+        }
     }
 }

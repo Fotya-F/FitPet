@@ -1,5 +1,7 @@
 package ru.mirea.guseva.fitpet.data
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Transformations
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
@@ -26,15 +28,32 @@ class EventRepository @Inject constructor(
         return eventDao.getAllEvents()
     }
 
+    fun getAllLiveDataEvents(): LiveData<List<Event>> {
+        return Transformations.map(eventDao.getAllLiveDataEvents()) { events ->
+            events.filter { it.eventTime ?: Long.MAX_VALUE > System.currentTimeMillis() }
+        }
+    }
+
     suspend fun insertEvent(event: Event) {
-        eventDao.insertEvent(event)
-        val firestoreEvent = event.copy(userId = FirebaseAuth.getInstance().currentUser?.uid)
-        collection.add(firestoreEvent).await()
+        val userId = FirebaseAuth.getInstance().currentUser?.uid
+        if (userId != null) {
+            val firestoreEvent = event.copy(userId = userId)
+            collection.add(firestoreEvent).await()
+        }
+        eventDao.insert(event)
+    }
+
+    suspend fun delete(event: Event) {
+        eventDao.delete(event)
+    }
+
+    suspend fun deleteOldEvents() {
+        eventDao.deleteOldEvents(System.currentTimeMillis())
     }
 
     suspend fun syncWithFirestore() {
         val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
         val firestoreEvents = collection.whereEqualTo("userId", userId).get().await().toObjects(Event::class.java)
-        firestoreEvents.forEach { eventDao.insertEvent(it) }
+        firestoreEvents.forEach { eventDao.insert(it) }
     }
 }

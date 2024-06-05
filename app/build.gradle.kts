@@ -2,6 +2,7 @@ buildscript {
     repositories {
         google()
         mavenCentral()
+        maven(url = uri("https://jitpack.io"))
     }
     dependencies {
         classpath("com.android.tools.build:gradle:7.4.2")
@@ -16,6 +17,7 @@ allprojects {
     repositories {
         google()
         mavenCentral()
+        maven(url = uri("https://jitpack.io"))
     }
 }
 
@@ -65,9 +67,11 @@ android {
 }
 
 dependencies {
+    //implementation(libs.play.services.maps)
     implementation(platform("com.google.firebase:firebase-bom:32.1.1"))
     implementation("com.google.firebase:firebase-firestore-ktx")
     implementation("com.google.firebase:firebase-auth-ktx")
+    implementation(libs.play.services.maps)
 
     val hiltVersion = "2.45"
     val navVersion = "2.5.3"
@@ -90,6 +94,10 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.1")
     implementation("androidx.recyclerview:recyclerview:1.2.1")
     implementation("com.google.code.gson:gson:2.8.8")
+
+    implementation ("com.github.bumptech.glide:glide:4.14.2")
+    implementation ("androidx.work:work-runtime-ktx:2.7.1")
+    implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
 
     // Тестовые зависимости
     testImplementation("junit:junit:4.13.2")

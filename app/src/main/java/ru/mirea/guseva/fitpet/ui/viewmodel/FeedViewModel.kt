@@ -1,12 +1,11 @@
 package ru.mirea.guseva.fitpet.ui.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import ru.mirea.guseva.fitpet.data.ArticleRepository
 import ru.mirea.guseva.fitpet.data.local.entities.Article
@@ -38,9 +37,14 @@ class FeedViewModel @Inject constructor(
 
     private fun loadArticles() {
         viewModelScope.launch {
-            articleRepository.getAllArticles().collect { articles ->
-                _allArticles.value = articles
-                _filteredArticles.value = articles
+            try {
+                articleRepository.getAllArticles().collect { articles ->
+                    _allArticles.value = articles
+                    _filteredArticles.value = articles
+                    Log.d("FeedViewModel", "Loaded articles: ${articles.size}")
+                }
+            } catch (e: Exception) {
+                Log.e("FeedViewModel", "Error loading articles: ${e.message}")
             }
         }
     }
@@ -87,9 +91,58 @@ class FeedViewModel @Inject constructor(
         }
     }
 
-    fun syncWithFirestore() {
+    fun syncAndLoadArticles() {
         viewModelScope.launch {
-            articleRepository.syncWithFirestore()
+            try {
+                articleRepository.syncWithFirestore()
+                loadArticles()
+            } catch (e: Exception) {
+                Log.e("FeedViewModel", "Error syncing articles: ${e.message}")
+                e.printStackTrace()
+            }
+        }
+    }
+
+    fun addArticle(article: Article) {
+        viewModelScope.launch {
+            try {
+                articleRepository.insertArticle(article)
+                syncAndLoadArticles()
+            } catch (e: Exception) {
+                Log.e("FeedViewModel", "Error adding article: ${e.message}")
+                e.printStackTrace()
+            }
+        }
+    }
+
+    fun clearAndLoadArticles() {
+        viewModelScope.launch {
+            try {
+                articleRepository.clearFirestore()
+                addSampleArticles()
+            } catch (e: Exception) {
+                Log.e("FeedViewModel", "Error clearing Firestore: ${e.message}")
+            }
+        }
+    }
+
+    private fun addSampleArticles() {
+        viewModelScope.launch {
+            val articles = listOf(
+                Article(title = "Уход за харьками", content = "Харьки - активные животные, требующие большого количества внимания и ухода.", imageUrl = "url4", tags = listOf("Харьки")),
+                Article(title = "Уход за крысами", content = "Крысы - умные и социальные животные, которые могут стать отличными домашними питомцами.", imageUrl = "url5", tags = listOf("Крысы")),
+                Article(title = "Уход за обезьянами", content = "Обезьяны - очень умные и требовательные животные, нуждающиеся в особом уходе и условиях содержания.", imageUrl = "url6", tags = listOf("Обезьяны"))
+            )
+
+            articles.forEach { article ->
+                try {
+                    articleRepository.insertArticle(article)
+                } catch (e: Exception) {
+                    Log.e("FeedViewModel", "Error adding sample article: ${e.message}")
+                }
+            }
+
+            syncAndLoadArticles()
         }
     }
 }

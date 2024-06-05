@@ -1,6 +1,7 @@
 package ru.mirea.guseva.fitpet.data.local
 
 import android.content.Context
+import android.util.Log
 import androidx.room.*
 import androidx.sqlite.db.SupportSQLiteDatabase
 import kotlinx.coroutines.CoroutineScope
@@ -26,20 +27,24 @@ abstract class AppDatabase : RoomDatabase() {
         override fun onCreate(db: SupportSQLiteDatabase) {
             super.onCreate(db)
             INSTANCE?.let { database ->
-                runBlocking {
+                scope.launch {
                     populateDatabase(database.articleDao())
                 }
             }
         }
 
         suspend fun populateDatabase(articleDao: ArticleDao) {
+            Log.d("AppDatabase", "Populating database with sample articles")
             articleDao.deleteAll()
             val articles = listOf(
-                Article(title = "Уход за собаками", content = "Собаки - отличные компаньоны...", imageUrl = "url1", tags = listOf("Собака")),
-                Article(title = "Уход за кошками", content = "Кошки - независимые животные...", imageUrl = "url2", tags = listOf("Кошка")),
-                Article(title = "Уход за черепахами", content = "Черепахи требуют сбалансированного питания...", imageUrl = "url3", tags = listOf("Черепаха"))
+                Article(title = "Уход за собаками", content = "Собаки - отличные компаньоны. Они требуют регулярного ухода и внимания.", imageUrl = "url1", tags = listOf("Собака")),
+                Article(title = "Уход за кошками", content = "Кошки - независимые животные, но также нуждаются в заботе и уходе.", imageUrl = "url2", tags = listOf("Кошка")),
+                Article(title = "Уход за черепахами", content = "Черепахи требуют сбалансированного питания и правильных условий содержания.", imageUrl = "url3", tags = listOf("Черепаха"))
             )
-            articles.forEach { article -> articleDao.insertArticle(article) }
+            articles.forEach { article ->
+                articleDao.insertArticle(article)
+                Log.d("AppDatabase", "Inserted article: ${article.title}")
+            }
         }
     }
 
