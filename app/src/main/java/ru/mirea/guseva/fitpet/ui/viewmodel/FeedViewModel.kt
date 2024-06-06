@@ -22,6 +22,9 @@ class FeedViewModel @Inject constructor(
     private val _allArticles = MutableLiveData<List<Article>>()
     private val allArticles: LiveData<List<Article>> = _allArticles
 
+    private val _allTags = MutableLiveData<List<String>>()
+    val allTags: LiveData<List<String>> = _allTags
+
     private val _selectedTags = MutableLiveData<List<String>>()
     val selectedTags: LiveData<List<String>> = _selectedTags
 
@@ -39,6 +42,11 @@ class FeedViewModel @Inject constructor(
                 articleRepository.getAllArticles().collect { articles ->
                     _allArticles.value = articles
                     _filteredArticles.value = articles
+
+                    // Извлечение всех уникальных тегов
+                    val tags = articles.flatMap { it.tags }.distinct()
+                    _allTags.value = tags
+
                     Log.d("FeedViewModel", "Loaded articles: ${articles.size}")
                 }
             } catch (e: Exception) {
@@ -46,6 +54,7 @@ class FeedViewModel @Inject constructor(
             }
         }
     }
+
 
     fun refreshArticles() {
         loadArticles()

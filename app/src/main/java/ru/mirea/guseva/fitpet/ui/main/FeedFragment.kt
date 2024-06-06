@@ -99,24 +99,28 @@ class FeedFragment : Fragment() {
     }
 
     private fun showFilterDialog() {
-        val petTypes = resources.getStringArray(R.array.pet_types)
+        val tags = feedViewModel.allTags.value ?: emptyList()
         val selectedTags = feedViewModel.selectedTags.value ?: emptyList()
-        val selectedItems = petTypes.map { selectedTags.contains(it) }.toBooleanArray()
+        val selectedItems = tags.map { selectedTags.contains(it) }.toBooleanArray()
+
         val builder = AlertDialog.Builder(requireContext())
         builder.setTitle("Filter Articles")
-        builder.setMultiChoiceItems(petTypes, selectedItems) { _, which, isChecked ->
+        builder.setMultiChoiceItems(tags.toTypedArray(), selectedItems) { _, which, isChecked ->
             selectedItems[which] = isChecked
         }
         builder.setPositiveButton("Apply") { _, _ ->
-            val selectedPetTypes = petTypes.filterIndexed { index, _ -> selectedItems[index] }
-            feedViewModel.filterArticlesByTags(selectedPetTypes)
+            val selectedTags = tags.filterIndexed { index, _ -> selectedItems[index] }
+            feedViewModel.filterArticlesByTags(selectedTags)
         }
-        builder.setNegativeButton("Cancel") { dialog, _ -> dialog.cancel() }
+        builder.setNegativeButton("Cancel") { dialog, _ ->
+            dialog.cancel()
+        }
         builder.setNeutralButton("Clear Filters") { _, _ ->
             feedViewModel.filterArticlesByTags(emptyList())
         }
         builder.show()
     }
+
 
     private fun onArticleClicked(article: Article) {
         findNavController().navigate(FeedFragmentDirections.actionFeedFragmentToArticleDetailFragment(article.id))
