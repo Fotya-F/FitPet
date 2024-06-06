@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.work.Data
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
+import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -131,8 +132,9 @@ class CalendarFragment : Fragment() {
                     eventTime = SimpleDateFormat(
                         "dd/MM/yyyy HH:mm",
                         Locale.getDefault()
-                    ).parse(dateTime)?.time ?: 0L, // Используем 0L как значение по умолчанию
-                    imageUrl = imageUrl
+                    ).parse(dateTime)?.time ?: 0L,
+                    imageUrl = imageUrl,
+                    userId = FirebaseAuth.getInstance().currentUser?.uid ?: ""
                 )
                 calendarViewModel.insert(event)
                 scheduleNotification(requireContext(), event)

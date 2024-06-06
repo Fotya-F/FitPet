@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 import ru.mirea.guseva.fitpet.R
 import ru.mirea.guseva.fitpet.databinding.FragmentAddPetBinding
@@ -51,7 +52,8 @@ class AddPetFragment : Fragment() {
                 type = petType,
                 age = petAge,
                 weight = petWeight,
-                lastVetVisit = System.currentTimeMillis().toString()
+                lastVetVisit = System.currentTimeMillis().toString(),
+                userId = FirebaseAuth.getInstance().currentUser?.uid ?: ""
             )
 
             petViewModel.insertPet(pet)

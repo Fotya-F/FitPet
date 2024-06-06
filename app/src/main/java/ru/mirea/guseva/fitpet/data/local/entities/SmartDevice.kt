@@ -10,5 +10,5 @@ data class SmartDevice(
     val petId: Int,
     val type: String,
     val isConnected: Boolean,
-    val userId: String? = null // Для Firestore
+    val userId: String
 )

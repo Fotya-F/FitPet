@@ -13,16 +13,15 @@ import javax.inject.Singleton
 
 @Singleton
 class PetRepository @Inject constructor(private val petDao: PetDao) {
-    // private val db: FirebaseFirestore = Firebase.firestore
-    // private val collection = db.collection("pets")
 
-    val allPets: Flow<List<Pet>> = petDao.getAllPets()
+    fun getAllPetsByUser(userId: String): Flow<List<Pet>> = petDao.getAllPetsByUser(userId)
 
     suspend fun insertPet(pet: Pet) {
         petDao.insertPet(pet)
-        // val firestorePet = pet.copy(userId = FirebaseAuth.getInstance().currentUser?.uid)
-        // collection.add(firestorePet).await()
     }
+
+    val allPets: Flow<List<Pet>> = petDao.getAllPets()
+
 
     suspend fun updatePet(pet: Pet) {
         petDao.updatePet(pet)

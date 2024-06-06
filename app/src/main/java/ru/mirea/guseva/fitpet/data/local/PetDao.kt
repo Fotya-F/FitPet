@@ -10,11 +10,17 @@ import ru.mirea.guseva.fitpet.data.local.entities.Pet
 
 @Dao
 interface PetDao {
-    @Query("SELECT * FROM pets")
-    fun getAllPets(): Flow<List<Pet>>
+    @Query("SELECT * FROM pets WHERE userId = :userId")
+    fun getAllPetsByUser(userId: String): Flow<List<Pet>>
 
     @Query("SELECT * FROM pets WHERE id = :petId")
     fun getPetById(petId: Int): Flow<Pet?>
+
+
+    @Query("SELECT * FROM pets WHERE id = :petId AND userId = :userId")
+    fun getPetByIdAndUser(petId: Int, userId: String): Flow<Pet?>
+    @Query("SELECT * FROM pets")
+    fun getAllPets(): Flow<List<Pet>>
 
     @Query("SELECT * FROM pets WHERE name = :petName LIMIT 1")
     suspend fun getPetByName(petName: String): Pet?
@@ -27,4 +33,8 @@ interface PetDao {
 
     @Delete
     suspend fun deletePet(pet: Pet)
+
+    @Query("SELECT * FROM pets WHERE userId = :userId")
+    fun getPetsByUser(userId: String): Flow<List<Pet>>
+
 }

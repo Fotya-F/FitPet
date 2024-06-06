@@ -11,5 +11,6 @@ data class Pet(
     val age: Int,
     val weight: Float,
     val lastVetVisit: String,
-    val userId: String? = null // Для Firestore
+    val userId: String
 )
+

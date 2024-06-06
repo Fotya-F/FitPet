@@ -3,6 +3,7 @@ package ru.mirea.guseva.fitpet.data.local
 import android.content.Context
 import android.util.Log
 import androidx.room.*
+import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -12,7 +13,7 @@ import ru.mirea.guseva.fitpet.data.local.entities.Pet
 import ru.mirea.guseva.fitpet.data.local.entities.SmartDevice
 import ru.mirea.guseva.fitpet.utils.Converters
 
-@Database(entities = [Article::class, Event::class, Pet::class, SmartDevice::class], version = 7, exportSchema = false)
+@Database(entities = [Article::class, Event::class, Pet::class, SmartDevice::class], version = 8, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun articleDao(): ArticleDao
@@ -30,6 +31,13 @@ abstract class AppDatabase : RoomDatabase() {
 //                    populateDatabase(database.articleDao())
 //                }
 //            }
+        }
+        val MIGRATION_7_8 = object : Migration(7, 8) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL("ALTER TABLE pets ADD COLUMN userId TEXT")
+                database.execSQL("ALTER TABLE event ADD COLUMN userId TEXT")
+                database.execSQL("ALTER TABLE smart_devices ADD COLUMN userId TEXT")
+            }
         }
 
         suspend fun populateDatabase(articleDao: ArticleDao) {

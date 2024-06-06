@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import ru.mirea.guseva.fitpet.R
@@ -62,8 +63,10 @@ class AddDeviceFragment : Fragment() {
                         name = deviceName,
                         type = deviceType,
                         petId = pet.id,
-                        isConnected = true
+                        isConnected = true,
+                        userId = FirebaseAuth.getInstance().currentUser?.uid ?: ""
                     )
+                    deviceViewModel.insertDevice(device)
 
                     deviceViewModel.insertDevice(device)
                     Toast.makeText(requireContext(), "Устройство успешно добавлено", Toast.LENGTH_SHORT).show()

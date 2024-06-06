@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.Spinner
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -24,6 +25,15 @@ class EditPetFragment : Fragment() {
 
     private val petViewModel: PetViewModel by viewModels()
     private val args: EditPetFragmentArgs by navArgs()
+
+    private fun getSpinnerIndex(spinner: Spinner, value: String): Int {
+        for (i in 0 until spinner.count) {
+            if (spinner.getItemAtPosition(i) == value) {
+                return i
+            }
+        }
+        return 0
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,8 +55,9 @@ class EditPetFragment : Fragment() {
         val petId = args.petId
         petViewModel.getPetById(petId).observe(viewLifecycleOwner) { pet ->
             pet?.let { currentPet ->
+                // Update the UI with the current pet data
                 binding.petNameEditText.setText(currentPet.name)
-                binding.petTypeSpinner.setSelection(petTypes.indexOf(currentPet.type))
+                binding.petTypeSpinner.setSelection(getSpinnerIndex(binding.petTypeSpinner, currentPet.type))
                 binding.petAgeEditText.setText(currentPet.age.toString())
                 binding.petWeightEditText.setText(currentPet.weight.toString())
 
@@ -57,7 +68,8 @@ class EditPetFragment : Fragment() {
                         type = binding.petTypeSpinner.selectedItem.toString(),
                         age = binding.petAgeEditText.text.toString().toIntOrNull() ?: currentPet.age,
                         weight = binding.petWeightEditText.text.toString().toFloatOrNull() ?: currentPet.weight,
-                        lastVetVisit = currentPet.lastVetVisit
+                        lastVetVisit = currentPet.lastVetVisit,
+                        userId = currentPet.userId
                     )
                     petViewModel.updatePet(updatedPet)
                     Toast.makeText(requireContext(), "Питомец успешно обновлен", Toast.LENGTH_SHORT).show()

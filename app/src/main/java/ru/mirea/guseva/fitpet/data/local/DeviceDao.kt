@@ -10,6 +10,11 @@ import ru.mirea.guseva.fitpet.data.local.entities.SmartDevice
 
 @Dao
 interface DeviceDao {
+    @Query("SELECT * FROM smart_devices WHERE userId = :userId")
+    fun getAllDevicesByUser(userId: String): Flow<List<SmartDevice>>
+
+    @Query("SELECT * FROM smart_devices WHERE id = :deviceId AND userId = :userId")
+    fun getDeviceByIdAndUser(deviceId: Int, userId: String): Flow<SmartDevice?>
     @Query("SELECT * FROM smart_devices")
     fun getAllDevices(): Flow<List<SmartDevice>>
 

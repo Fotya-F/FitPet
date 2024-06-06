@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import ru.mirea.guseva.fitpet.data.DeviceRepository
@@ -14,11 +15,15 @@ import javax.inject.Inject
 class DeviceViewModel @Inject constructor(
     private val deviceRepository: DeviceRepository
 ) : ViewModel() {
-    val devices: LiveData<List<SmartDevice>> = deviceRepository.allDevices.asLiveData()
+
+    private val userId: String
+        get() = FirebaseAuth.getInstance().currentUser?.uid ?: ""
+
+    val devices = deviceRepository.getAllDevicesByUser(userId).asLiveData()
 
     fun insertDevice(device: SmartDevice) {
         viewModelScope.launch {
-            deviceRepository.insertDevice(device)
+            deviceRepository.insertDevice(device.copy(userId = userId))
         }
     }
 
@@ -34,11 +39,5 @@ class DeviceViewModel @Inject constructor(
         }
     }
 
-    fun getDeviceById(deviceId: Int) = deviceRepository.getDeviceById(deviceId).asLiveData()
-
-    fun syncWithFirestore() {
-        viewModelScope.launch {
-            // deviceRepository.syncWithFirestore()
-        }
-    }
+    fun getDeviceById(deviceId: Int) = deviceRepository.getDeviceByIdAndUser(deviceId, userId).asLiveData()
 }

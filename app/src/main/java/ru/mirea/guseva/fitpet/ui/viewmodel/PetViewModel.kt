@@ -3,6 +3,7 @@ package ru.mirea.guseva.fitpet.ui.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -14,15 +15,19 @@ import javax.inject.Inject
 class PetViewModel @Inject constructor(
     private val petRepository: PetRepository
 ) : ViewModel() {
-    val pets = petRepository.allPets.asLiveData()
+
+    private val userId: String
+        get() = FirebaseAuth.getInstance().currentUser?.uid ?: ""
+
+    val pets = petRepository.getAllPetsByUser(userId).asLiveData()
+
+    fun getPetById(petId: Int) = petRepository.getPetById(petId).asLiveData()
 
     fun insertPet(pet: Pet) {
         viewModelScope.launch {
             petRepository.insertPet(pet)
         }
     }
-
-    fun getPetById(petId: Int) = petRepository.getPetById(petId).asLiveData()
 
     fun updatePet(pet: Pet) {
         viewModelScope.launch {

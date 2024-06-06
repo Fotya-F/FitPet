@@ -66,7 +66,8 @@ class EditDeviceFragment : Fragment() {
                             name = binding.deviceNameEditText.text.toString(),
                             type = binding.deviceTypeSpinner.selectedItem.toString(),
                             petId = selectedPet.id,
-                            isConnected = currentDevice.isConnected
+                            isConnected = currentDevice.isConnected,
+                            userId = currentDevice.userId
                         )
                         deviceViewModel.updateDevice(updatedDevice)
                         Toast.makeText(requireContext(), "Устройство успешно обновлено", Toast.LENGTH_SHORT).show()
