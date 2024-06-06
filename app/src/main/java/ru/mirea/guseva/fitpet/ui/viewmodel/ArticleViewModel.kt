@@ -15,7 +15,6 @@ import javax.inject.Inject
 class ArticleViewModel @Inject constructor(
     private val articleRepository: ArticleRepository
 ) : ViewModel() {
-
     fun getArticleById(articleId: Int): LiveData<Article?> {
         return articleRepository.getArticleById(articleId).asLiveData()
     }
@@ -29,7 +28,7 @@ class ArticleViewModel @Inject constructor(
 
     fun syncWithFirestore() {
         viewModelScope.launch {
-            articleRepository.syncWithFirestore()
+            // articleRepository.syncWithFirestore()
         }
     }
 }

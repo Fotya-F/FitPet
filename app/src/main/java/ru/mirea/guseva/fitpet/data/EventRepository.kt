@@ -17,8 +17,8 @@ import javax.inject.Singleton
 class EventRepository @Inject constructor(
     private val eventDao: EventDao
 ) {
-    private val db: FirebaseFirestore = Firebase.firestore
-    private val collection = db.collection("events")
+    // private val db: FirebaseFirestore = Firebase.firestore
+    // private val collection = db.collection("events")
 
     fun getEventsByPet(petId: Int): Flow<List<Event>> {
         return eventDao.getEventsByPet(petId)
@@ -37,8 +37,8 @@ class EventRepository @Inject constructor(
     suspend fun insertEvent(event: Event) {
         val userId = FirebaseAuth.getInstance().currentUser?.uid
         if (userId != null) {
-            val firestoreEvent = event.copy(userId = userId)
-            collection.add(firestoreEvent).await()
+            // val firestoreEvent = event.copy(userId = userId)
+            // collection.add(firestoreEvent).await()
         }
         eventDao.insert(event)
     }
@@ -53,7 +53,7 @@ class EventRepository @Inject constructor(
 
     suspend fun syncWithFirestore() {
         val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
-        val firestoreEvents = collection.whereEqualTo("userId", userId).get().await().toObjects(Event::class.java)
-        firestoreEvents.forEach { eventDao.insert(it) }
+        // val firestoreEvents = collection.whereEqualTo("userId", userId).get().await().toObjects(Event::class.java)
+        // firestoreEvents.forEach { eventDao.insert(it) }
     }
 }

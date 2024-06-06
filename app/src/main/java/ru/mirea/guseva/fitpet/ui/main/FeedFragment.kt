@@ -3,6 +3,7 @@ package ru.mirea.guseva.fitpet.ui.main
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,10 +24,8 @@ import ru.mirea.guseva.fitpet.ui.viewmodel.PetViewModel
 
 @AndroidEntryPoint
 class FeedFragment : Fragment() {
-
     private var _binding: FragmentFeedBinding? = null
     private val binding get() = _binding!!
-
     private val feedViewModel: FeedViewModel by viewModels()
     private val petViewModel: PetViewModel by viewModels()
     private lateinit var articleAdapter: ArticleAdapter
@@ -41,29 +40,17 @@ class FeedFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         articleAdapter = ArticleAdapter(emptyList()) { article ->
             onArticleClicked(article)
         }
-
         binding.rvArticles.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = articleAdapter
         }
-
         observeViewModel()
-
-        binding.searchButton.setOnClickListener {
-            showSearchDialog()
-        }
-
-        binding.filterButton.setOnClickListener {
-            showFilterDialog()
-        }
-
-        binding.favoriteButton.setOnClickListener {
-            feedViewModel.toggleFavoriteFilter()
-        }
+        binding.searchButton.setOnClickListener { showSearchDialog() }
+        binding.filterButton.setOnClickListener { showFilterDialog() }
+        binding.favoriteButton.setOnClickListener { feedViewModel.toggleFavoriteFilter() }
     }
 
     override fun onResume() {
@@ -74,10 +61,10 @@ class FeedFragment : Fragment() {
     private fun observeViewModel() {
         feedViewModel.filteredArticles.observe(viewLifecycleOwner, Observer { articles ->
             articles?.let {
+                Log.d("FeedFragment", "Updating articles adapter with ${it.size} articles")
                 articleAdapter.updateData(it)
             }
         })
-
         petViewModel.pets.observe(viewLifecycleOwner, Observer { pets ->
             if (feedViewModel.isAutoFilterEnabled) {
                 feedViewModel.filterArticlesByPets(pets)
@@ -88,7 +75,6 @@ class FeedFragment : Fragment() {
     private fun showSearchDialog() {
         val builder = AlertDialog.Builder(requireContext())
         builder.setTitle("Search Articles")
-
         val input = EditText(requireContext())
         input.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
@@ -104,13 +90,11 @@ class FeedFragment : Fragment() {
             }
         })
         builder.setView(input)
-
         builder.setPositiveButton("Search") { _, _ ->
             val query = input.text.toString()
             feedViewModel.searchArticles(query)
         }
         builder.setNegativeButton("Cancel") { dialog, _ -> dialog.cancel() }
-
         builder.show()
     }
 
@@ -118,24 +102,19 @@ class FeedFragment : Fragment() {
         val petTypes = resources.getStringArray(R.array.pet_types)
         val selectedTags = feedViewModel.selectedTags.value ?: emptyList()
         val selectedItems = petTypes.map { selectedTags.contains(it) }.toBooleanArray()
-
         val builder = AlertDialog.Builder(requireContext())
         builder.setTitle("Filter Articles")
-
         builder.setMultiChoiceItems(petTypes, selectedItems) { _, which, isChecked ->
             selectedItems[which] = isChecked
         }
-
         builder.setPositiveButton("Apply") { _, _ ->
             val selectedPetTypes = petTypes.filterIndexed { index, _ -> selectedItems[index] }
             feedViewModel.filterArticlesByTags(selectedPetTypes)
         }
         builder.setNegativeButton("Cancel") { dialog, _ -> dialog.cancel() }
-
         builder.setNeutralButton("Clear Filters") { _, _ ->
             feedViewModel.filterArticlesByTags(emptyList())
         }
-
         builder.show()
     }
 

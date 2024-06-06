@@ -14,7 +14,6 @@ import javax.inject.Inject
 class PetViewModel @Inject constructor(
     private val petRepository: PetRepository
 ) : ViewModel() {
-
     val pets = petRepository.allPets.asLiveData()
 
     fun insertPet(pet: Pet) {
@@ -43,7 +42,7 @@ class PetViewModel @Inject constructor(
 
     fun syncWithFirestore() {
         viewModelScope.launch {
-            petRepository.syncWithFirestore()
+            // petRepository.syncWithFirestore()
         }
     }
 }

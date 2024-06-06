@@ -2,6 +2,7 @@ package ru.mirea.guseva.fitpet.data.local
 
 import androidx.room.Dao
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import kotlinx.coroutines.flow.Flow
@@ -21,7 +22,7 @@ interface ArticleDao {
     @Query("SELECT * FROM articles WHERE :tag IN (tags)")
     fun getArticlesByTag(tag: String): Flow<List<Article>>
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertArticle(article: Article)
 
     @Update
@@ -29,4 +30,8 @@ interface ArticleDao {
 
     @Query("DELETE FROM articles")
     suspend fun deleteAll()
+
+    @Query("SELECT COUNT(*) FROM articles")
+    suspend fun getArticleCount(): Int
+
 }

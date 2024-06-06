@@ -11,7 +11,6 @@ import androidx.core.app.NotificationManagerCompat
 import ru.mirea.guseva.fitpet.R
 
 object NotificationHelper {
-
     private const val CHANNEL_ID = "fitpet_channel"
     private const val CHANNEL_NAME = "FitPet Notifications"
     private const val CHANNEL_DESCRIPTION = "Notifications for FitPet app"
@@ -22,8 +21,7 @@ object NotificationHelper {
             val channel = NotificationChannel(CHANNEL_ID, CHANNEL_NAME, importance).apply {
                 description = CHANNEL_DESCRIPTION
             }
-            val notificationManager: NotificationManager =
-                context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            val notificationManager: NotificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             notificationManager.createNotificationChannel(channel)
         }
     }
@@ -35,13 +33,11 @@ object NotificationHelper {
                 return
             }
         }
-
         val builder = NotificationCompat.Builder(context, CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_launcher_foreground)
             .setContentTitle(title)
             .setContentText(message)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-
         with(NotificationManagerCompat.from(context)) {
             notify(System.currentTimeMillis().toInt(), builder.build())
         }

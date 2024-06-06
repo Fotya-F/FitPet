@@ -13,7 +13,6 @@ import javax.inject.Inject
 class CalendarViewModel @Inject constructor(
     private val eventRepository: EventRepository
 ) : ViewModel() {
-
     val allEvents: Flow<List<Event>> = eventRepository.getAllEvents()
 
     fun deleteOldEvents() {

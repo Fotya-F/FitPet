@@ -7,16 +7,11 @@ import com.google.firebase.firestore.IgnoreExtraProperties
 import ru.mirea.guseva.fitpet.utils.Converters
 
 @Entity(tableName = "articles")
-@IgnoreExtraProperties
-@TypeConverters(Converters::class)
 data class Article(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
-    val title: String = "",
-    val content: String = "",
-    val imageUrl: String? = null,
+    val title: String,
+    val content: String,
+    val imageUrl: String?,
     val isFavorite: Boolean = false,
-    val tags: List<String> = emptyList(),
-    val userId: String? = null // Для Firestore
-) {
-    constructor() : this(0, "", "", null, false, emptyList(), null)
-}
+    val tags: List<String> = emptyList()
+)

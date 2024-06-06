@@ -18,10 +18,7 @@ class AuthViewModel @Inject constructor(
 ) : ViewModel() {
     private val auth: FirebaseAuth by lazy { FirebaseAuth.getInstance() }
     private val sharedPreferences: SharedPreferences = context.getSharedPreferences("auth_prefs", Context.MODE_PRIVATE)
-
-    private val _currentUser = MutableLiveData<FirebaseUser?>().apply {
-        value = auth.currentUser
-    }
+    private val _currentUser = MutableLiveData<FirebaseUser?>().apply { value = auth.currentUser }
     val currentUser: LiveData<FirebaseUser?> = _currentUser
 
     init {
@@ -30,7 +27,6 @@ class AuthViewModel @Inject constructor(
             Log.d("AuthViewModel", "Auth state changed: ${firebaseAuth.currentUser?.email}")
         }
     }
-
 
     fun registerUser(email: String, password: String, onComplete: (Boolean) -> Unit) {
         auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
@@ -62,7 +58,6 @@ class AuthViewModel @Inject constructor(
         clearCredentials()
         Log.d("AuthViewModel", "User logged out and credentials cleared")
     }
-
 
     private fun saveCredentials(email: String, password: String) {
         with(sharedPreferences.edit()) {

@@ -13,26 +13,25 @@ import javax.inject.Singleton
 
 @Singleton
 class PetRepository @Inject constructor(private val petDao: PetDao) {
-
-    private val db: FirebaseFirestore = Firebase.firestore
-    private val collection = db.collection("pets")
+    // private val db: FirebaseFirestore = Firebase.firestore
+    // private val collection = db.collection("pets")
 
     val allPets: Flow<List<Pet>> = petDao.getAllPets()
 
     suspend fun insertPet(pet: Pet) {
         petDao.insertPet(pet)
-        val firestorePet = pet.copy(userId = FirebaseAuth.getInstance().currentUser?.uid)
-        collection.add(firestorePet).await()
+        // val firestorePet = pet.copy(userId = FirebaseAuth.getInstance().currentUser?.uid)
+        // collection.add(firestorePet).await()
     }
 
     suspend fun updatePet(pet: Pet) {
         petDao.updatePet(pet)
-        collection.document(pet.id.toString()).set(pet).await()
+        // collection.document(pet.id.toString()).set(pet).await()
     }
 
     suspend fun deletePet(pet: Pet) {
         petDao.deletePet(pet)
-        collection.document(pet.id.toString()).delete().await()
+        // collection.document(pet.id.toString()).delete().await()
     }
 
     fun getPetById(petId: Int): Flow<Pet?> {
@@ -45,7 +44,7 @@ class PetRepository @Inject constructor(private val petDao: PetDao) {
 
     suspend fun syncWithFirestore() {
         val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
-        val firestorePets = collection.whereEqualTo("userId", userId).get().await().toObjects(Pet::class.java)
-        firestorePets.forEach { petDao.insertPet(it) }
+        // val firestorePets = collection.whereEqualTo("userId", userId).get().await().toObjects(Pet::class.java)
+        // firestorePets.forEach { petDao.insertPet(it) }
     }
 }

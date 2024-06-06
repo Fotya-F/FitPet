@@ -16,7 +16,6 @@ import javax.inject.Inject
 class FeedViewModel @Inject constructor(
     private val articleRepository: ArticleRepository
 ) : ViewModel() {
-
     private val _filteredArticles = MutableLiveData<List<Article>>()
     val filteredArticles: LiveData<List<Article>> = _filteredArticles
 
@@ -27,7 +26,6 @@ class FeedViewModel @Inject constructor(
     val selectedTags: LiveData<List<String>> = _selectedTags
 
     var isAutoFilterEnabled = true
-
     private var isFavoriteFilterActive = false
 
     init {
@@ -44,7 +42,7 @@ class FeedViewModel @Inject constructor(
                     Log.d("FeedViewModel", "Loaded articles: ${articles.size}")
                 }
             } catch (e: Exception) {
-                Log.e("FeedViewModel", "Error loading articles: ${e.message}")
+                Log.e("FeedViewModel", "Error loading articles", e)
             }
         }
     }
@@ -94,7 +92,7 @@ class FeedViewModel @Inject constructor(
     fun syncAndLoadArticles() {
         viewModelScope.launch {
             try {
-                articleRepository.syncWithFirestore()
+                // articleRepository.syncWithFirestore()
                 loadArticles()
             } catch (e: Exception) {
                 Log.e("FeedViewModel", "Error syncing articles: ${e.message}")
@@ -107,7 +105,8 @@ class FeedViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 articleRepository.insertArticle(article)
-                syncAndLoadArticles()
+                // Загрузка статей только при необходимости
+                // syncAndLoadArticles()
             } catch (e: Exception) {
                 Log.e("FeedViewModel", "Error adding article: ${e.message}")
                 e.printStackTrace()
@@ -118,31 +117,29 @@ class FeedViewModel @Inject constructor(
     fun clearAndLoadArticles() {
         viewModelScope.launch {
             try {
-                articleRepository.clearFirestore()
-                addSampleArticles()
+                // articleRepository.clearFirestore()
+                // addSampleArticles() // Убедитесь, что этот метод не вызывается
             } catch (e: Exception) {
                 Log.e("FeedViewModel", "Error clearing Firestore: ${e.message}")
             }
         }
     }
 
-    private fun addSampleArticles() {
-        viewModelScope.launch {
-            val articles = listOf(
-                Article(title = "Уход за харьками", content = "Харьки - активные животные, требующие большого количества внимания и ухода.", imageUrl = "url4", tags = listOf("Харьки")),
-                Article(title = "Уход за крысами", content = "Крысы - умные и социальные животные, которые могут стать отличными домашними питомцами.", imageUrl = "url5", tags = listOf("Крысы")),
-                Article(title = "Уход за обезьянами", content = "Обезьяны - очень умные и требовательные животные, нуждающиеся в особом уходе и условиях содержания.", imageUrl = "url6", tags = listOf("Обезьяны"))
-            )
-
-            articles.forEach { article ->
-                try {
-                    articleRepository.insertArticle(article)
-                } catch (e: Exception) {
-                    Log.e("FeedViewModel", "Error adding sample article: ${e.message}")
-                }
-            }
-
-            syncAndLoadArticles()
-        }
-    }
+    // private fun addSampleArticles() {
+    //     viewModelScope.launch {
+    //         val articles = listOf(
+    //             Article(title = "Уход за харьками", content = "Харьки - активные животные, требующие большого количества внимания и ухода.", imageUrl = "url4", tags = listOf("Харьки")),
+    //             Article(title = "Уход за крысами", content = "Крысы - умные и социальные животные, которые могут стать отличными домашними питомцами.", imageUrl = "url5", tags = listOf("Крысы")),
+    //             Article(title = "Уход за обезьянами", content = "Обезьяны - очень умные и требовательные животные, нуждающиеся в особом уходе и условиях содержания.", imageUrl = "url6", tags = listOf("Обезьяны"))
+    //         )
+    //         articles.forEach { article ->
+    //             try {
+    //                 articleRepository.insertArticle(article)
+    //             } catch (e: Exception) {
+    //                 Log.e("FeedViewModel", "Error adding sample article: ${e.message}")
+    //             }
+    //         }
+    //         syncAndLoadArticles()
+    //     }
+    // }
 }

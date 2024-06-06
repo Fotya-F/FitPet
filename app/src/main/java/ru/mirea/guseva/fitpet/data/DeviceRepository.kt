@@ -13,26 +13,25 @@ import javax.inject.Singleton
 
 @Singleton
 class DeviceRepository @Inject constructor(private val deviceDao: DeviceDao) {
-
-    private val db: FirebaseFirestore = Firebase.firestore
-    private val collection = db.collection("devices")
+    // private val db: FirebaseFirestore = Firebase.firestore
+    // private val collection = db.collection("devices")
 
     val allDevices: Flow<List<SmartDevice>> = deviceDao.getAllDevices()
 
     suspend fun insertDevice(device: SmartDevice) {
         deviceDao.insertDevice(device)
-        val firestoreDevice = device.copy(userId = FirebaseAuth.getInstance().currentUser?.uid)
-        collection.add(firestoreDevice).await()
+        // val firestoreDevice = device.copy(userId = FirebaseAuth.getInstance().currentUser?.uid)
+        // collection.add(firestoreDevice).await()
     }
 
     suspend fun updateDevice(device: SmartDevice) {
         deviceDao.updateDevice(device)
-        collection.document(device.id.toString()).set(device).await()
+        // collection.document(device.id.toString()).set(device).await()
     }
 
     suspend fun deleteDevice(device: SmartDevice) {
         deviceDao.deleteDevice(device)
-        collection.document(device.id.toString()).delete().await()
+        // collection.document(device.id.toString()).delete().await()
     }
 
     fun getDeviceById(deviceId: Int): Flow<SmartDevice?> {
@@ -41,7 +40,7 @@ class DeviceRepository @Inject constructor(private val deviceDao: DeviceDao) {
 
     suspend fun syncWithFirestore() {
         val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
-        val firestoreDevices = collection.whereEqualTo("userId", userId).get().await().toObjects(SmartDevice::class.java)
-        firestoreDevices.forEach { deviceDao.insertDevice(it) }
+        // val firestoreDevices = collection.whereEqualTo("userId", userId).get().await().toObjects(SmartDevice::class.java)
+        // firestoreDevices.forEach { deviceDao.insertDevice(it) }
     }
 }

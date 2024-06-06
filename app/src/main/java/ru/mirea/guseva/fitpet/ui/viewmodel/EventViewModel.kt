@@ -13,7 +13,6 @@ import javax.inject.Inject
 class EventViewModel @Inject constructor(
     private val eventRepository: EventRepository
 ) : ViewModel() {
-
     val allEvents = eventRepository.getAllEvents().asLiveData()
 
     fun insertEvent(event: Event) {
@@ -24,7 +23,7 @@ class EventViewModel @Inject constructor(
 
     fun syncWithFirestore() {
         viewModelScope.launch {
-            eventRepository.syncWithFirestore()
+            // eventRepository.syncWithFirestore()
         }
     }
 }

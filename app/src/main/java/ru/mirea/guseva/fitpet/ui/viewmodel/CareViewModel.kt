@@ -12,12 +12,11 @@ import javax.inject.Inject
 class CareViewModel @Inject constructor(
     private val petRepository: PetRepository
 ) : ViewModel() {
-
     val pets = petRepository.allPets.asLiveData()
 
     fun syncWithFirestore() {
         viewModelScope.launch {
-            petRepository.syncWithFirestore()
+            // petRepository.syncWithFirestore()
         }
     }
 }

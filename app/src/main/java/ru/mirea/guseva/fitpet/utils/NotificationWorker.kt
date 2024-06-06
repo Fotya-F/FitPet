@@ -13,7 +13,6 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class NotificationWorker(context: Context, workerParams: WorkerParameters) : Worker(context, workerParams) {
-
     companion object {
         const val CHANNEL_ID = "EVENT_NOTIFICATION_CHANNEL"
     }
@@ -22,22 +21,17 @@ class NotificationWorker(context: Context, workerParams: WorkerParameters) : Wor
         val eventId = inputData.getInt("event_id", -1)
         val animalName = inputData.getString("animal_name")
         val eventTime = inputData.getLong("event_time", 0L)
-
         if (eventId == -1 || animalName.isNullOrEmpty() || eventTime == 0L) {
             return Result.failure()
         }
-
         createNotificationChannel()
-
         val notification = NotificationCompat.Builder(applicationContext, CHANNEL_ID)
             .setSmallIcon(R.drawable.cat)
             .setContentTitle("Напоминание о событии")
             .setContentText("Событие $animalName завтра в ${SimpleDateFormat("HH:mm", Locale.getDefault()).format(Date(eventTime))}")
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .build()
-
         NotificationManagerCompat.from(applicationContext).notify(eventId, notification)
-
         return Result.success()
     }
 

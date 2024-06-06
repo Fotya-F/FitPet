@@ -6,7 +6,6 @@ import androidx.room.*
 import androidx.sqlite.db.SupportSQLiteDatabase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import ru.mirea.guseva.fitpet.data.local.entities.Article
 import ru.mirea.guseva.fitpet.data.local.entities.Event
 import ru.mirea.guseva.fitpet.data.local.entities.Pet
@@ -26,11 +25,11 @@ abstract class AppDatabase : RoomDatabase() {
     ) : RoomDatabase.Callback() {
         override fun onCreate(db: SupportSQLiteDatabase) {
             super.onCreate(db)
-            INSTANCE?.let { database ->
-                scope.launch {
-                    populateDatabase(database.articleDao())
-                }
-            }
+//            INSTANCE?.let { database ->
+//                scope.launch {
+//                    populateDatabase(database.articleDao())
+//                }
+//            }
         }
 
         suspend fun populateDatabase(articleDao: ArticleDao) {
@@ -58,10 +57,7 @@ abstract class AppDatabase : RoomDatabase() {
                     context.applicationContext,
                     AppDatabase::class.java,
                     "fitpet_db"
-                )
-                    .addCallback(AppDatabaseCallback(scope))
-                    .fallbackToDestructiveMigration()
-                    .build()
+                ).addCallback(AppDatabaseCallback(scope)).fallbackToDestructiveMigration().build()
                 INSTANCE = instance
                 instance
             }

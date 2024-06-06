@@ -14,7 +14,6 @@ import javax.inject.Inject
 class DeviceViewModel @Inject constructor(
     private val deviceRepository: DeviceRepository
 ) : ViewModel() {
-
     val devices: LiveData<List<SmartDevice>> = deviceRepository.allDevices.asLiveData()
 
     fun insertDevice(device: SmartDevice) {
@@ -39,7 +38,7 @@ class DeviceViewModel @Inject constructor(
 
     fun syncWithFirestore() {
         viewModelScope.launch {
-            deviceRepository.syncWithFirestore()
+            // deviceRepository.syncWithFirestore()
         }
     }
 }

@@ -1,5 +1,6 @@
 package ru.mirea.guseva.fitpet.ui.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -17,7 +18,9 @@ class ArticleAdapter(
     }
 
     override fun onBindViewHolder(holder: ArticleViewHolder, position: Int) {
-        holder.bind(articles[position], clickListener)
+        val article = articles[position]
+        Log.d("ArticleAdapter", "Binding article: ${article.title}")
+        holder.bind(article, clickListener)
     }
 
     override fun getItemCount(): Int = articles.size
