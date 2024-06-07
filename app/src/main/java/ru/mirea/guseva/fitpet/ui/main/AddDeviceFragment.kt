@@ -68,7 +68,6 @@ class AddDeviceFragment : Fragment() {
                     )
                     deviceViewModel.insertDevice(device)
 
-                    deviceViewModel.insertDevice(device)
                     Toast.makeText(requireContext(), "Устройство успешно добавлено", Toast.LENGTH_SHORT).show()
                     findNavController().navigate(AddDeviceFragmentDirections.actionAddDeviceFragmentToProfilesFragment())
                 } else {
