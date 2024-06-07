@@ -19,38 +19,46 @@ class PetViewModel @Inject constructor(
     private val userId: String
         get() = FirebaseAuth.getInstance().currentUser?.uid ?: ""
 
+    // Используем LiveData для наблюдения за изменениями в списке питомцев
     val pets = petRepository.getAllPetsByUser(userId).asLiveData()
 
+    // Получение питомца по ID
     fun getPetById(petId: Int) = petRepository.getPetById(petId).asLiveData()
 
+    // Вставка нового питомца
     fun insertPet(pet: Pet) {
         viewModelScope.launch {
             petRepository.insertPet(pet)
         }
     }
 
+    // Обновление данных питомца
     fun updatePet(pet: Pet) {
         viewModelScope.launch {
             petRepository.updatePet(pet)
         }
     }
 
+    // Удаление питомца
     fun deletePet(pet: Pet) {
         viewModelScope.launch {
             petRepository.deletePet(pet)
         }
     }
 
+    // Получение питомца по имени
     fun getPetByName(petName: String): Pet? = runBlocking {
         petRepository.getPetByName(petName)
     }
 
+    // Синхронизация данных с Firestore
     fun syncWithFirestore() {
         viewModelScope.launch {
             petRepository.syncWithFirestore()
         }
     }
 
+    // Восстановление данных из Firestore
     fun restoreFromFirestore() {
         viewModelScope.launch {
             petRepository.restoreFromFirestore()
