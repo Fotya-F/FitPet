@@ -14,7 +14,7 @@
         android:layout_height="match_parent"
         android:layout_marginBottom="?android:attr/actionBarSize">
 
-
+        <!-- Контейнер для информации о питомце -->
         <LinearLayout
             android:id="@+id/petInfoContainer"
             android:layout_width="match_parent"
@@ -48,6 +48,7 @@
                 android:gravity="center" />
         </LinearLayout>
 
+        <!-- Горизонтальный RecyclerView для карточек питомцев -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvPets"
             android:layout_width="match_parent"
@@ -56,6 +57,7 @@
             android:orientation="horizontal"
             android:padding="8dp"/>
 
+        <!-- Заголовок для ближайших событий -->
         <TextView
             android:id="@+id/upcomingPlansTitle"
             android:layout_width="wrap_content"
@@ -68,28 +70,27 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="16dp"/>
 
-        <TextView
-            android:id="@+id/upcomingPlansDate"
-            android:layout_width="wrap_content"
+        <!-- RecyclerView для ближайших событий -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvEvents"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="8 мая"
-            android:textSize="14sp"
             app:layout_constraintTop_toBottomOf="@id/upcomingPlansTitle"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="8dp"/>
+            android:padding="8dp"/>
 
+        <!-- Заголовок для состояния питомца -->
         <TextView
             android:id="@+id/petCondition"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Состояние"
             android:textSize="14sp"
-            app:layout_constraintTop_toBottomOf="@id/upcomingPlansDate"
+            app:layout_constraintTop_toBottomOf="@id/rvEvents"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="8dp"/>
 
+        <!-- Текстовые поля для состояния питомца -->
         <TextView
             android:id="@+id/petSleep"
             android:layout_width="wrap_content"
@@ -123,8 +124,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="8dp"/>
 
-        <!-- Adding TextViews for nextAppointment and petStatus -->
-        <TextView
+        <!-- Удаляем этот элемент -->
+        <!-- <TextView
             android:id="@+id/nextAppointment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -133,17 +134,7 @@
             android:layout_marginTop="16dp"
             app:layout_constraintTop_toBottomOf="@id/petActivity"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintEnd_toEndOf="parent"/> -->
 
-        <TextView
-            android:id="@+id/petStatus"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Состояние питомца: Сон, Вес, Активность..."
-            android:textSize="14sp"
-            android:layout_marginTop="8dp"
-            app:layout_constraintTop_toBottomOf="@id/nextAppointment"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

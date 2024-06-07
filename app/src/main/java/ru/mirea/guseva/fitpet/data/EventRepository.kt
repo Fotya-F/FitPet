@@ -43,6 +43,9 @@ class EventRepository @Inject constructor(private val eventDao: EventDao) {
         eventDao.deleteOldEvents(System.currentTimeMillis())
     }
 
+    fun getEventsByPet(petId: Int): Flow<List<Event>> {
+        return eventDao.getEventsByPet(petId)
+    }
     suspend fun syncWithFirestore() {
         val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
         val firestoreEvents = eventDao.getAllEventsByUser(userId).firstOrNull()?.let { events ->

@@ -37,4 +37,8 @@ class PetAdapter(private val clickListener: (Pet) -> Unit) : ListAdapter<Pet, Pe
             return oldItem == newItem
         }
     }
+
+    fun updateData(newPets: List<Pet>) {
+        submitList(newPets)
+    }
 }
