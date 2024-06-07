@@ -5,6 +5,7 @@
     <string name="pet_image">Изображение питомца</string>
     <string name="add_pet">Добавить питомца</string>
     <string name="default_notification_channel_id">fitpet_channel</string>
+    <string name="recommendations">Рекомендации</string>
     <string-array name="pet_types">
         <item>Собака</item>
         <item>Кошка</item>

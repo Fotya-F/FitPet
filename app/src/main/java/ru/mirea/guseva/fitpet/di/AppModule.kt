@@ -1,6 +1,7 @@
 package ru.mirea.guseva.fitpet.di
 
 import android.content.Context
+import android.content.SharedPreferences
 import androidx.room.Room
 import dagger.Module
 import dagger.Provides
@@ -9,6 +10,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
+import ru.mirea.guseva.fitpet.data.PetRepository
 import ru.mirea.guseva.fitpet.data.local.AppDatabase
 import ru.mirea.guseva.fitpet.data.local.ArticleDao
 import ru.mirea.guseva.fitpet.data.local.DeviceDao
@@ -49,5 +51,16 @@ object AppModule {
     @Provides
     fun providePetDao(appDatabase: AppDatabase): PetDao {
         return appDatabase.petDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideSharedPreferences(@ApplicationContext context: Context): SharedPreferences {
+        return context.getSharedPreferences("fitpet_prefs", Context.MODE_PRIVATE)
+    }
+
+    @Provides
+    fun providePetRepository(petDao: PetDao, sharedPreferences: SharedPreferences): PetRepository {
+        return PetRepository(petDao, sharedPreferences)
     }
 }
