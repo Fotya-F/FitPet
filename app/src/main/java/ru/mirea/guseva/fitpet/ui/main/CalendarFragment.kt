@@ -1,6 +1,5 @@
 package ru.mirea.guseva.fitpet.ui.main
 
-import android.R
 import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
@@ -10,11 +9,11 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.work.Data
 import androidx.work.OneTimeWorkRequestBuilder
@@ -54,7 +53,8 @@ class CalendarFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         eventAdapter = EventAdapter(emptyList()) { event ->
-            // Обработка кликов по элементам событий
+            // Navigate to EventDetailFragment
+            findNavController().navigate(CalendarFragmentDirections.actionCalendarFragmentToEventDetailFragment(event.id))
         }
         binding.recyclerView.apply {
             adapter = eventAdapter
@@ -86,34 +86,32 @@ class CalendarFragment : Fragment() {
         val day = currentDate.get(Calendar.DAY_OF_MONTH)
         val hour = currentDate.get(Calendar.HOUR_OF_DAY)
         val minute = currentDate.get(Calendar.MINUTE)
+
         val datePickerDialog = DatePickerDialog(
-            requireContext(),
-            { _, selectedYear, selectedMonth, selectedDay ->
+            requireContext(), { _, selectedYear, selectedMonth, selectedDay ->
                 val calendar = Calendar.getInstance()
                 calendar.set(selectedYear, selectedMonth, selectedDay)
                 val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
                 val dateFormatted = dateFormat.format(calendar.time)
                 dialogBinding.eventDateInput.setText(dateFormatted)
-            },
-            year, month, day
+            }, year, month, day
         )
+
         val timePickerDialog = TimePickerDialog(
-            requireContext(),
-            { _, selectedHour, selectedMinute ->
+            requireContext(), { _, selectedHour, selectedMinute ->
                 val timeFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
                 val calendar = Calendar.getInstance()
                 calendar.set(Calendar.HOUR_OF_DAY, selectedHour)
                 calendar.set(Calendar.MINUTE, selectedMinute)
                 val timeFormatted = timeFormat.format(calendar.time)
                 dialogBinding.eventTimeInput.setText(timeFormatted)
-            },
-            hour, minute, true
+            }, hour, minute, true
         )
 
         // Load pets from ViewModel and set up the spinner
         petViewModel.pets.observe(viewLifecycleOwner) { pets ->
             val petNames = pets.map { it.name }
-            val petAdapter = ArrayAdapter(requireContext(), R.layout.simple_spinner_item, petNames)
+            val petAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, petNames)
             petAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             dialogBinding.petSpinner.adapter = petAdapter
         }
@@ -122,7 +120,7 @@ class CalendarFragment : Fragment() {
             .setView(dialogBinding.root)
             .setPositiveButton("Добавить") { _, _ ->
                 val selectedPetName = dialogBinding.petSpinner.selectedItem.toString()
-                val description = dialogBinding.descriptionInput.text.toString()
+                val description = dialogBinding.eventDescription.text.toString()
                 val eventDate = dialogBinding.eventDateInput.text.toString()
                 val eventTime = dialogBinding.eventTimeInput.text.toString()
                 val imageUrl = dialogBinding.imageUrlInput.text.toString()
@@ -155,6 +153,7 @@ class CalendarFragment : Fragment() {
                 false
             }
         }
+
         dialogBinding.eventTimeInput.setOnTouchListener { _, event ->
             if (event.action == MotionEvent.ACTION_DOWN) {
                 timePickerDialog.show()

@@ -18,26 +18,21 @@ import javax.inject.Singleton
 class EventRepository @Inject constructor(private val eventDao: EventDao) {
     private val db: FirebaseFirestore = Firebase.firestore
     private val collection = db.collection("events")
+
     fun getAllEvents(): Flow<List<Event>> {
         return eventDao.getAllEvents()
     }
 
-    fun getEventsByPetAndUser(petId: Int, userId: String): Flow<List<Event>> {
-        return eventDao.getEventsByPetAndUser(petId, userId)
-    }
-
-    fun getAllEventsByUser(userId: String): Flow<List<Event>> {
-        return eventDao.getAllEventsByUser(userId)
-    }
-
-    fun getAllLiveDataEvents(): LiveData<List<Event>> {
-        return Transformations.map(eventDao.getAllLiveDataEvents()) { events ->
-            events.filter { it.eventTime ?: Long.MAX_VALUE > System.currentTimeMillis() }
-        }
+    fun getEventById(eventId: Int): Flow<Event?> {
+        return eventDao.getEventById(eventId)
     }
 
     suspend fun insertEvent(event: Event) {
         eventDao.insert(event)
+    }
+
+    suspend fun updateEvent(event: Event) {
+        eventDao.update(event)
     }
 
     suspend fun delete(event: Event) {

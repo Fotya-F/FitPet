@@ -1,9 +1,15 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="16dp">
+
+    <EditText
+        android:id="@+id/event_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Название события"
+        android:inputType="text" />
 
     <Spinner
         android:id="@+id/pet_spinner"
@@ -12,7 +18,7 @@
         android:hint="Выберите питомца" />
 
     <EditText
-        android:id="@+id/description_input"
+        android:id="@+id/event_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Описание"
@@ -25,6 +31,7 @@
         android:hint="Время"
         android:focusable="false"
         android:clickable="true" />
+
     <EditText
         android:id="@+id/event_date_input"
         android:layout_width="match_parent"

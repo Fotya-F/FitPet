@@ -57,7 +57,11 @@
             android:id="@+id/calendarFragment"
             android:name="ru.mirea.guseva.fitpet.ui.main.CalendarFragment"
             android:label="Calendar"
-            tools:layout="@layout/fragment_calendar" />
+            tools:layout="@layout/fragment_calendar">
+            <action
+                android:id="@+id/action_calendarFragment_to_eventDetailFragment"
+                app:destination="@id/eventDetailFragment" />
+        </fragment>
 
         <fragment
             android:id="@+id/careFragment"
@@ -137,7 +141,11 @@
             android:id="@+id/eventDetailFragment"
             android:name="ru.mirea.guseva.fitpet.ui.main.EventDetailFragment"
             android:label="Event Detail"
-            tools:layout="@layout/fragment_event_detail" />
+            tools:layout="@layout/fragment_event_detail">
+            <argument
+                android:name="eventId"
+                app:argType="integer" />
+        </fragment>
 
         <fragment
             android:id="@+id/addPetFragment"

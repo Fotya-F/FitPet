@@ -7,6 +7,11 @@ import ru.mirea.guseva.fitpet.data.local.entities.Event
 
 @Dao
 interface EventDao {
+    @Query("SELECT * FROM event WHERE id = :eventId")
+    fun getEventById(eventId: Int): Flow<Event?>
+
+    @Update
+    suspend fun update(event: Event)
     @Query("SELECT * FROM event")
     fun getAllEvents(): Flow<List<Event>>
     @Query("SELECT * FROM event WHERE petId = :petId AND userId = :userId")
