@@ -11,8 +11,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="16dp">
-
+        android:layout_marginBottom="?android:attr/actionBarSize">
         <LinearLayout
             android:id="@+id/buttonContainer"
             android:layout_width="0dp"

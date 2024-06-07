@@ -10,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:layout_marginBottom="?android:attr/actionBarSize"
         android:padding="16dp"
         tools:context=".ui.main.ProfilesFragment">
 
@@ -58,22 +59,31 @@
                 android:layout_weight="1"/>
         </LinearLayout>
 
-        <Button
-            android:id="@+id/profileSettingsButton"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Настройки профиля"
-            android:layout_marginTop="16dp"/>
+            android:orientation="horizontal"
+            android:layout_marginTop="16dp">
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end|bottom"
-            android:layout_margin="16dp"
-            android:contentDescription="@string/add_pet"
-            app:srcCompat="@drawable/ic_add"
-            android:tint="@color/white"/>
+            <Button
+                android:id="@+id/profileSettingsButton"
+                android:layout_width="236dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_weight="1"
+                android:text="Настройки профиля" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:layout_marginStart="8dp"
+                android:contentDescription="@string/add_pet"
+                android:tint="@color/white"
+                app:srcCompat="@drawable/ic_add" />
+        </LinearLayout>
 
     </LinearLayout>
 </layout>
