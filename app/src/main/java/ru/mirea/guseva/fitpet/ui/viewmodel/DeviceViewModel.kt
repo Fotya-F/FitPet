@@ -40,4 +40,16 @@ class DeviceViewModel @Inject constructor(
     }
 
     fun getDeviceById(deviceId: Int) = deviceRepository.getDeviceByIdAndUser(deviceId, userId).asLiveData()
+
+    fun syncWithFirestore() {
+        viewModelScope.launch {
+            deviceRepository.syncWithFirestore()
+        }
+    }
+
+    fun restoreFromFirestore() {
+        viewModelScope.launch {
+            deviceRepository.restoreFromFirestore()
+        }
+    }
 }

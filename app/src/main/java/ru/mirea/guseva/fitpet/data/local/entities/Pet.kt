@@ -12,5 +12,7 @@ data class Pet(
     val weight: Float,
     val lastVetVisit: String,
     val userId: String
-)
+) {
+    constructor() : this(0, "", "", 0, 0f, "", "")
+}
 

@@ -19,8 +19,8 @@ import javax.inject.Singleton
 class ArticleRepository @Inject constructor(
     private val articleDao: ArticleDao
 ) {
-    // private val db: FirebaseFirestore = Firebase.firestore
-    // private val collection = db.collection("articles")
+    private val db: FirebaseFirestore = Firebase.firestore
+    private val collection = db.collection("articles")
     fun getAllArticles(): Flow<List<Article>> {
         return articleDao.getAllArticles().map { articles ->
             Log.d("ArticleRepository", "Retrieved ${articles.size} articles from database")
@@ -54,11 +54,27 @@ class ArticleRepository @Inject constructor(
     suspend fun syncWithFirestore() {
         val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
         try {
-            // val firestoreArticles = collection.get().await().toObjects(Article::class.java)
-            // firestoreArticles.forEach { articleDao.insertArticle(it) }
-            //Log.d("ArticleRepository", "Synced articles: ${firestoreArticles.size}")
+            val firestoreArticles = articleDao.getAllArticles().firstOrNull()?.let { articles ->
+                articles.map { it.copy(userId = userId) }
+            } ?: emptyList()
+            firestoreArticles.forEach { article ->
+                val articleRef = collection.document(article.id.toString())
+                articleRef.set(article).await()
+            }
         } catch (e: Exception) {
             Log.e("ArticleRepository", "Error syncing articles: ${e.message}")
+        }
+    }
+
+    suspend fun restoreFromFirestore() {
+        val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
+        try {
+            val firestoreArticles = collection.whereEqualTo("userId", userId).get().await().toObjects(Article::class.java)
+            firestoreArticles.forEach { article ->
+                articleDao.insertArticle(article)
+            }
+        } catch (e: Exception) {
+            Log.e("ArticleRepository", "Error restoring articles: ${e.message}")
         }
     }
 

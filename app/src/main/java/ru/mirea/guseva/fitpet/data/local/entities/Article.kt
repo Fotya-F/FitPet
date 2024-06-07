@@ -9,9 +9,12 @@ import ru.mirea.guseva.fitpet.utils.Converters
 @Entity(tableName = "articles")
 data class Article(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
-    val title: String,
-    val content: String,
-    val imageUrl: String?,
+    val title: String = "",
+    val content: String = "",
+    val imageUrl: String? = null,
     val isFavorite: Boolean = false,
-    val tags: List<String> = emptyList()
-)
+    val tags: List<String> = emptyList(),
+    val userId: String? = null
+) {
+    constructor() : this(0, "", "", null, false, emptyList(), null)
+}

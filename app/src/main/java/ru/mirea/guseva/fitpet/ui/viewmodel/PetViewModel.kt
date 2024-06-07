@@ -47,7 +47,13 @@ class PetViewModel @Inject constructor(
 
     fun syncWithFirestore() {
         viewModelScope.launch {
-            // petRepository.syncWithFirestore()
+            petRepository.syncWithFirestore()
+        }
+    }
+
+    fun restoreFromFirestore() {
+        viewModelScope.launch {
+            petRepository.restoreFromFirestore()
         }
     }
 }

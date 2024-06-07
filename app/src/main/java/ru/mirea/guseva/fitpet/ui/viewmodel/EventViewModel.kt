@@ -27,4 +27,16 @@ class EventViewModel @Inject constructor(
             eventRepository.insertEvent(event.copy(userId = userId))
         }
     }
+
+    fun syncWithFirestore() {
+        viewModelScope.launch {
+            eventRepository.syncWithFirestore()
+        }
+    }
+
+    fun restoreFromFirestore() {
+        viewModelScope.launch {
+            eventRepository.restoreFromFirestore()
+        }
+    }
 }

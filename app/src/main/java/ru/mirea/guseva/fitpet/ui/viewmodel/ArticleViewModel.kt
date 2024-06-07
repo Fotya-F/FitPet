@@ -28,7 +28,13 @@ class ArticleViewModel @Inject constructor(
 
     fun syncWithFirestore() {
         viewModelScope.launch {
-            // articleRepository.syncWithFirestore()
+            articleRepository.syncWithFirestore()
+        }
+    }
+
+    fun restoreFromFirestore() {
+        viewModelScope.launch {
+            articleRepository.restoreFromFirestore()
         }
     }
 }
