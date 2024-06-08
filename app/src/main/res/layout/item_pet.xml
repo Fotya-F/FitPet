@@ -12,45 +12,67 @@
         android:layout_height="wrap_content"
         android:padding="16dp">
 
+        <ImageView
+            android:id="@+id/petImageView"
+            android:layout_width="128dp"
+            android:layout_height="128dp"
+            android:layout_margin="8dp"
+            android:layout_marginEnd="16dp"
+            android:contentDescription="Изображение питомца"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toTopOf="@id/petName"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <TextView
             android:id="@+id/petName"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{pet.name}"
-            android:textAppearance="?attr/textAppearanceListItem"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@id/petImageView"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            android:text="@{pet.name}"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/petType"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
             android:text="@{pet.type}"
             android:textAppearance="?attr/textAppearanceListItem"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/petName"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintStart_toEndOf="@id/petImageView"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/petAge"
+            app:layout_constraintVertical_bias="0.5" />
 
         <TextView
             android:id="@+id/petAge"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
             android:text="@{String.valueOf(pet.age)}"
             android:textAppearance="?attr/textAppearanceListItem"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@id/petImageView"
             app:layout_constraintTop_toBottomOf="@id/petType"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/petWeight"
+            app:layout_constraintVertical_bias="0.5" />
 
         <TextView
             android:id="@+id/petWeight"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
             android:text="@{String.valueOf(pet.weight)}"
             android:textAppearance="?attr/textAppearanceListItem"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@id/petImageView"
             app:layout_constraintTop_toBottomOf="@id/petAge"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintVertical_bias="0.5" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
