@@ -1,12 +1,15 @@
 package ru.mirea.guseva.fitpet
 
+import android.Manifest
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
@@ -14,9 +17,6 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
@@ -31,9 +31,20 @@ class MainActivity : AppCompatActivity() {
     private val authViewModel: AuthViewModel by viewModels()
     private val feedViewModel: FeedViewModel by viewModels()
     private lateinit var bottomNavView: BottomNavigationView
-    // private lateinit var firestore: FirebaseFirestore
     private lateinit var auth: FirebaseAuth
     private var currentUser: FirebaseUser? = null
+
+    private val requestPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestMultiplePermissions()
+    ) { permissions ->
+        permissions.entries.forEach {
+            if (it.value) {
+                // Permission is granted. Continue the action or workflow in your app.
+            } else {
+                // Explain to the user that the feature is unavailable because the feature requires a permission that the user has denied.
+            }
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,7 +57,6 @@ class MainActivity : AppCompatActivity() {
 
         // Initialize Firebase auth
         auth = FirebaseAuth.getInstance()
-        // firestore = Firebase.firestore
 
         // Create notification channel
         NotificationHelper.createNotificationChannel(this)
@@ -62,7 +72,7 @@ class MainActivity : AppCompatActivity() {
                 if (navController.currentDestination?.id == R.id.authFragment) {
                     navController.navigate(R.id.action_authFragment_to_main_graph)
                 }
-                //checkAdminAndAddSampleArticles()
+                // checkAdminAndAddSampleArticles()
                 // syncDataWithFirestore()
             } else {
                 // User is not logged in
@@ -70,6 +80,38 @@ class MainActivity : AppCompatActivity() {
                     navController.navigate(R.id.auth_graph)
                 }
             }
+        }
+
+        // Check and request permissions
+        checkAndRequestPermissions()
+    }
+
+    private fun checkAndRequestPermissions() {
+        val permissionsToRequest = mutableListOf<String>()
+
+        // Permission for notifications (Android 13+)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                permissionsToRequest.add(Manifest.permission.POST_NOTIFICATIONS)
+            }
+        }
+
+        // Permissions for reading and writing storage
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_MEDIA_IMAGES) != PackageManager.PERMISSION_GRANTED) {
+                permissionsToRequest.add(Manifest.permission.READ_MEDIA_IMAGES)
+            }
+        } else {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                permissionsToRequest.add(Manifest.permission.READ_EXTERNAL_STORAGE)
+            }
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                permissionsToRequest.add(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            }
+        }
+
+        if (permissionsToRequest.isNotEmpty()) {
+            requestPermissionLauncher.launch(permissionsToRequest.toTypedArray())
         }
     }
 
@@ -88,39 +130,4 @@ class MainActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp() || super.onSupportNavigateUp()
     }
-
-    // private fun syncDataWithFirestore() {
-    //     currentUser?.let {
-    //         try {
-    //             feedViewModel.syncAndLoadArticles()
-    //         } catch (e: Exception) {
-    //             Log.e("MainActivity", "Error syncing articles: ${e.message}")
-    //             e.printStackTrace()
-    //         }
-    //     } ?: run {
-    //         Log.d("MainActivity", "User is not logged in, skipping sync.")
-    //     }
-    // }
-
-//    private fun checkAdminAndAddSampleArticles() {
-//        currentUser?.let {
-//            try {
-//                auth.currentUser?.getIdToken(true)?.addOnSuccessListener { result ->
-//                    val isAdmin = result.claims["admin"] as Boolean? ?: false
-//                    if (isAdmin) {
-//                        feedViewModel.clearAndLoadArticles()
-//                    } else {
-//                        Toast.makeText(this, "You don't have admin rights to add sample articles.", Toast.LENGTH_SHORT).show()
-//                    }
-//                }?.addOnFailureListener {
-//                    Log.e("MainActivity", "Error getting user claims: ${it.message}")
-//                }
-//            } catch (e: Exception) {
-//                Log.e("MainActivity", "Error checking admin claims: ${e.message}")
-//                e.printStackTrace()
-//            }
-//        } ?: run {
-//            Log.d("MainActivity", "User is not logged in, skipping admin check.")
-//        }
-//    }
 }
